@@ -4,8 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="Pequeños Exploradores Shock - Juegos bíblicos infantiles de Shock 99.5 FM">
+<meta name="theme-color" content="#0a0820">
 <title>Pequeños Exploradores Shock | Juegos Bíblicos</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preload" as="image" href="logo-shock.png">
+
 <style>
 /* =========================================================
    RESET Y VARIABLES
@@ -15,11 +18,8 @@
 :root {
   --amarillo: #facc15;
   --naranja: #f97316;
-  --rojo: #dc2626;
   --azul: #1e3a8a;
   --celeste: #06b6d4;
-  --leon: #d97706;
-  --jerico: #a16207;
   --radio: 20px;
 }
 
@@ -39,31 +39,42 @@ body {
   flex-direction: column;
   background: #000;
   -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
 }
 
 /* =========================================================
-   CIELO DE FONDO — OSCURO
+   CIELO DE FONDO
    ========================================================= */
 .cielo-fondo {
   position: fixed;
   inset: 0;
   z-index: -12;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(180, 70, 0, 0.35) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 0%, rgba(20, 10, 40, 0.8) 0%, transparent 60%),
-    linear-gradient(180deg,
-      #000005 0%,
-      #050410 20%,
-      #0a0820 35%,
-      #150a25 50%,
-      #2a0f28 65%,
-      #451520 80%,
-      #6b2015 92%,
-      #8b2810 100%);
+  background: linear-gradient(180deg,
+    #000005 0%,
+    #050410 20%,
+    #0a0820 35%,
+    #150a25 50%,
+    #2a0f28 65%,
+    #451520 80%,
+    #6b2015 92%,
+    #8b2810 100%);
+}
+
+@media (min-width: 768px) {
+  .cielo-fondo {
+    background:
+      radial-gradient(ellipse at 50% 100%, rgba(180, 70, 0, 0.35) 0%, transparent 55%),
+      radial-gradient(ellipse at 50% 0%, rgba(20, 10, 40, 0.8) 0%, transparent 60%),
+      linear-gradient(180deg,
+        #000005 0%, #050410 20%, #0a0820 35%,
+        #150a25 50%, #2a0f28 65%, #451520 80%,
+        #6b2015 92%, #8b2810 100%);
+  }
 }
 
 /* =========================================================
-   ESTRELLAS TIPO LUCIÉRNAGAS
+   ESTRELLAS
    ========================================================= */
 .estrellas {
   position: fixed;
@@ -71,54 +82,62 @@ body {
   z-index: -11;
   pointer-events: none;
   overflow: hidden;
+  contain: strict;
 }
 
 .estrella {
   position: absolute;
   background: white;
   border-radius: 50%;
+  will-change: opacity, transform;
   animation: titilar 3s ease-in-out infinite;
-  box-shadow:
-    0 0 4px rgba(255, 255, 255, 1),
-    0 0 10px rgba(255, 255, 255, 0.9),
-    0 0 18px rgba(255, 255, 200, 0.7),
-    0 0 30px rgba(255, 230, 150, 0.4);
 }
 
-.estrella.grande {
-  box-shadow:
-    0 0 6px rgba(255, 255, 255, 1),
-    0 0 15px rgba(255, 255, 255, 1),
-    0 0 30px rgba(255, 255, 200, 0.9),
-    0 0 50px rgba(255, 230, 150, 0.6),
-    0 0 80px rgba(255, 200, 100, 0.3);
+@media (max-width: 599px) {
+  .estrella {
+    box-shadow: 0 0 3px rgba(255, 255, 255, 0.8);
+  }
+}
+@media (min-width: 600px) {
+  .estrella {
+    box-shadow:
+      0 0 4px rgba(255, 255, 255, 1),
+      0 0 10px rgba(255, 255, 255, 0.9),
+      0 0 18px rgba(255, 255, 200, 0.7),
+      0 0 30px rgba(255, 230, 150, 0.4);
+  }
+  .estrella.grande {
+    box-shadow:
+      0 0 6px rgba(255, 255, 255, 1),
+      0 0 15px rgba(255, 255, 255, 1),
+      0 0 30px rgba(255, 255, 200, 0.9),
+      0 0 50px rgba(255, 230, 150, 0.6),
+      0 0 80px rgba(255, 200, 100, 0.3);
+  }
 }
 
 @keyframes titilar {
   0% { opacity: 0.3; transform: scale(0.6); }
-  40% { opacity: 1; transform: scale(1.4); }
-  60% { opacity: 0.9; transform: scale(1.2); }
+  40% { opacity: 1; transform: scale(1.2); }
+  60% { opacity: 0.9; transform: scale(1.1); }
   100% { opacity: 0.3; transform: scale(0.6); }
 }
 
-@keyframes destelloEstrella {
-  0%, 90%, 100% { opacity: 0.4; }
-  45% { opacity: 1; box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 230, 150, 0.8); }
-}
-
-.estrella.fugaz {
-  animation: titilar 3s ease-in-out infinite, destelloEstrella 8s ease-in-out infinite;
-}
-
 /* =========================================================
-   NUBES
+   NUBES (solo tablet/PC)
    ========================================================= */
 .nubes-espesas {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: -10;
   pointer-events: none;
   overflow: hidden;
+  contain: strict;
+}
+
+@media (min-width: 768px) {
+  .nubes-espesas { display: block; }
 }
 
 .nube-espesa {
@@ -127,19 +146,16 @@ body {
   filter: blur(45px);
   animation: nubeDensa 60s ease-in-out infinite;
   mix-blend-mode: multiply;
+  will-change: transform, opacity;
 }
 
-.nube-e1 { width: 800px; height: 350px; background: radial-gradient(ellipse, rgba(15, 10, 25, 0.95), rgba(8, 4, 15, 0.7) 50%, transparent 80%); top: -5%; left: -15%; animation-delay: 0s; }
-.nube-e2 { width: 900px; height: 400px; background: radial-gradient(ellipse, rgba(20, 12, 30, 0.95), rgba(10, 5, 20, 0.7) 50%, transparent 80%); top: 5%; right: -20%; animation-delay: 8s; }
-.nube-e3 { width: 850px; height: 380px; background: radial-gradient(ellipse, rgba(25, 15, 30, 0.9), rgba(12, 6, 18, 0.6) 50%, transparent 80%); top: 20%; left: 10%; animation-delay: 16s; }
-.nube-e4 { width: 700px; height: 320px; background: radial-gradient(ellipse, rgba(30, 18, 25, 0.9), rgba(15, 8, 15, 0.6) 50%, transparent 80%); top: 35%; right: 5%; animation-delay: 24s; }
-.nube-e5 { width: 900px; height: 400px; background: radial-gradient(ellipse, rgba(40, 20, 20, 0.9), rgba(20, 10, 12, 0.6) 50%, transparent 80%); top: 50%; left: -10%; animation-delay: 32s; }
+.nube-e1 { width: 800px; height: 350px; background: radial-gradient(ellipse, rgba(15, 10, 25, 0.95), transparent 80%); top: -5%; left: -15%; }
+.nube-e2 { width: 900px; height: 400px; background: radial-gradient(ellipse, rgba(20, 12, 30, 0.95), transparent 80%); top: 5%; right: -20%; animation-delay: 8s; }
+.nube-e3 { width: 850px; height: 380px; background: radial-gradient(ellipse, rgba(25, 15, 30, 0.9), transparent 80%); top: 20%; left: 10%; animation-delay: 16s; }
 
 @keyframes nubeDensa {
-  0%, 100% { transform: translateX(0) translateY(0) scale(1); opacity: 0.85; }
-  25% { transform: translateX(60px) translateY(-25px) scale(1.1); opacity: 1; }
-  50% { transform: translateX(-50px) translateY(20px) scale(0.95); opacity: 0.9; }
-  75% { transform: translateX(35px) translateY(-15px) scale(1.05); opacity: 1; }
+  0%, 100% { transform: translateX(0) translateY(0); opacity: 0.85; }
+  50% { transform: translateX(-50px) translateY(20px); opacity: 0.95; }
 }
 
 /* =========================================================
@@ -151,13 +167,13 @@ body {
   left: 0;
   right: 0;
   width: 100%;
-  height: 50vh;
+  height: 45vh;
   max-height: 500px;
-  min-height: 280px;
+  min-height: 220px;
   z-index: -8;
   pointer-events: none;
   overflow: hidden;
-  filter: brightness(1.25) contrast(1.1) drop-shadow(0 0 40px rgba(255, 140, 40, 0.5));
+  contain: strict;
 }
 
 .montana-sinai svg {
@@ -166,130 +182,67 @@ body {
   display: block;
 }
 
+@media (min-width: 1024px) {
+  .montana-sinai {
+    filter: brightness(1.15) drop-shadow(0 0 30px rgba(255, 140, 40, 0.4));
+  }
+}
+
 /* =========================================================
-   HUMO
+   HUMO (solo tablet/PC)
    ========================================================= */
 .humo-monte {
+  display: none;
   position: fixed;
-  bottom: 42vh;
+  bottom: 40vh;
   left: 0;
   right: 0;
   height: 50vh;
   z-index: -7;
   pointer-events: none;
   overflow: hidden;
+  contain: strict;
   mask-image: linear-gradient(to top, black 30%, transparent 100%);
   -webkit-mask-image: linear-gradient(to top, black 30%, transparent 100%);
+}
+
+@media (min-width: 768px) {
+  .humo-monte { display: block; }
 }
 
 .columna-humo {
   position: absolute;
   bottom: 0;
   border-radius: 50%;
-  filter: blur(45px);
-  animation: humoSube 14s ease-out infinite;
+  filter: blur(40px);
+  animation: humoSube 16s ease-out infinite;
   opacity: 0;
+  will-change: transform, opacity;
 }
 
 @keyframes humoSube {
-  0% { transform: translateY(0) scale(0.6) rotate(0deg); opacity: 0; }
-  20% { opacity: 0.6; }
-  50% { transform: translateY(-35vh) scale(1.5) rotate(20deg); opacity: 0.45; }
-  100% { transform: translateY(-75vh) scale(2.2) rotate(40deg); opacity: 0; }
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  20% { opacity: 0.5; }
+  50% { transform: translateY(-35vh) scale(1.4); opacity: 0.4; }
+  100% { transform: translateY(-75vh) scale(2); opacity: 0; }
 }
 
 /* =========================================================
-   FUEGO Y LLAMAS
+   RAYOS — AHORA ACTIVOS EN TODOS LOS DISPOSITIVOS
    ========================================================= */
-.fuego-cima {
+.tormenta {
   position: fixed;
-  bottom: 46vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 250px;
-  height: 250px;
-  z-index: -7;
+  inset: 0;
+  z-index: -4;
   pointer-events: none;
+  overflow: hidden;
+  contain: strict;
 }
-
-.brillo-cima {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 220px;
-  height: 220px;
-  background: radial-gradient(circle,
-    rgba(255, 250, 200, 0.95) 0%,
-    rgba(255, 200, 80, 0.75) 20%,
-    rgba(255, 120, 30, 0.5) 40%,
-    rgba(255, 60, 0, 0.25) 60%,
-    transparent 80%);
-  border-radius: 50%;
-  filter: blur(25px);
-  animation: brilloCimaPulsa 1.4s ease-in-out infinite;
-}
-
-@keyframes brilloCimaPulsa {
-  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
-  50% { transform: translateX(-50%) scale(1.25); opacity: 1; }
-}
-
-.llama {
-  position: absolute;
-  bottom: 15%;
-  border-radius: 50% 50% 30% 30%;
-  filter: blur(15px);
-  animation: llamaDanza 1.2s ease-in-out infinite;
-  mix-blend-mode: screen;
-}
-
-.llama-1 { left: 28%; width: 50px; height: 100px; background: radial-gradient(ellipse at bottom, rgba(255, 255, 200, 1) 0%, rgba(255, 200, 60, 0.9) 25%, rgba(255, 100, 20, 0.7) 60%, transparent 100%); }
-.llama-2 { left: 50%; transform: translateX(-50%); width: 70px; height: 140px; background: radial-gradient(ellipse at bottom, rgba(255, 255, 220, 1) 0%, rgba(255, 220, 80, 0.95) 25%, rgba(255, 120, 30, 0.75) 60%, transparent 100%); animation-delay: 0.3s; }
-.llama-3 { right: 28%; width: 50px; height: 100px; background: radial-gradient(ellipse at bottom, rgba(255, 255, 200, 1) 0%, rgba(255, 200, 60, 0.9) 25%, rgba(255, 100, 20, 0.7) 60%, transparent 100%); animation-delay: 0.6s; }
-
-@keyframes llamaDanza {
-  0%, 100% { transform: translateY(0) scale(1) rotate(-3deg); opacity: 0.85; }
-  50% { transform: translateY(-15px) scale(1.15) rotate(3deg); opacity: 1; }
-}
-
-/* =========================================================
-   LUZ DIVINA
-   ========================================================= */
-.luz-divina {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 150vw;
-  height: 70vh;
-  z-index: -6;
-  pointer-events: none;
-  background: radial-gradient(ellipse at 50% 100%,
-    rgba(255, 240, 150, 0.4) 0%,
-    rgba(255, 180, 60, 0.25) 20%,
-    rgba(255, 100, 20, 0.12) 40%,
-    transparent 70%);
-  animation: luzPulsa 1.5s ease-in-out infinite;
-}
-
-@keyframes luzPulsa {
-  0%, 100% { opacity: 0.75; }
-  50% { opacity: 1; }
-}
-
-/* =========================================================
-   RAYOS
-   ========================================================= */
-.tormenta { position: fixed; inset: 0; z-index: -4; pointer-events: none; overflow: hidden; }
 
 .relampago-cielo {
   position: fixed; inset: 0; z-index: -5; pointer-events: none;
   background: radial-gradient(ellipse at 50% 0%,
-    rgba(255, 240, 220, 0.95) 0%,
-    rgba(255, 200, 150, 0.6) 25%,
-    rgba(255, 150, 80, 0.3) 50%,
-    transparent 75%);
+    rgba(255, 240, 220, 0.9) 0%, rgba(255, 150, 80, 0.3) 50%, transparent 75%);
   opacity: 0;
   transition: opacity 0.1s ease-out;
 }
@@ -297,10 +250,7 @@ body {
 .flash-atmosfera {
   position: fixed; inset: 0; z-index: -4; pointer-events: none;
   background: radial-gradient(ellipse at 50% 30%,
-    rgba(255, 245, 220, 0.9) 0%,
-    rgba(255, 210, 150, 0.5) 30%,
-    rgba(255, 160, 80, 0.2) 55%,
-    transparent 80%);
+    rgba(255, 245, 220, 0.85) 0%, transparent 80%);
   opacity: 0;
 }
 
@@ -317,44 +267,27 @@ body {
 
 .rayo-svg {
   position: fixed; top: 0; pointer-events: none; z-index: -3;
-  filter:
-    drop-shadow(0 0 8px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 18px rgba(255, 240, 200, 1))
-    drop-shadow(0 0 35px rgba(255, 200, 100, 0.95));
+  filter: drop-shadow(0 0 12px rgba(255, 240, 200, 0.9));
   opacity: 0;
   animation: rayoAparicion 1.6s ease-out forwards;
+  will-change: opacity;
+}
+
+/* En móvil el filtro se simplifica para no trabar */
+@media (max-width: 599px) {
+  .rayo-svg {
+    filter: drop-shadow(0 0 8px rgba(255, 240, 200, 0.8));
+  }
 }
 
 .rayo-svg svg { display: block; overflow: visible; }
 
 @keyframes rayoAparicion {
   0% { opacity: 0; }
-  5% { opacity: 0.4; }
   8% { opacity: 1; }
   15% { opacity: 0.4; }
   22% { opacity: 1; }
-  35% { opacity: 0.85; }
-  55% { opacity: 0.9; }
-  75% { opacity: 0.5; }
-  100% { opacity: 0; }
-}
-
-.pulso-bocina {
-  position: fixed; inset: 0; z-index: -5; pointer-events: none;
-  background: radial-gradient(circle at 50% 70%,
-    rgba(255, 220, 150, 0.35) 0%,
-    rgba(255, 160, 80, 0.15) 30%,
-    transparent 60%);
-  opacity: 0;
-}
-
-.pulso-bocina.activo { animation: bocinaPulso 3s ease-in-out; }
-
-@keyframes bocinaPulso {
-  0% { opacity: 0; }
-  20% { opacity: 0.6; }
-  50% { opacity: 0.3; }
-  80% { opacity: 0.5; }
+  55% { opacity: 0.85; }
   100% { opacity: 0; }
 }
 
@@ -370,47 +303,50 @@ body {
 }
 
 .logo-shock-grande {
-  max-width: 300px;
   width: 72%;
+  max-width: 300px;
   height: auto;
+  aspect-ratio: 1 / 1;
   display: block;
   margin: 0 auto 1.2rem;
   object-fit: contain;
-  filter:
-    drop-shadow(0 0 25px rgba(250, 204, 21, 0.9))
-    drop-shadow(0 0 50px rgba(249, 115, 22, 0.6));
-  animation: logoBrilla 3s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .logo-shock-grande {
+    filter:
+      drop-shadow(0 0 25px rgba(250, 204, 21, 0.9))
+      drop-shadow(0 0 50px rgba(249, 115, 22, 0.6));
+    animation: logoBrilla 3s ease-in-out infinite;
+    will-change: transform, filter;
+  }
 }
 
 @keyframes logoBrilla {
-  0%, 100% {
-    filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 50px rgba(249, 115, 22, 0.6));
-    transform: scale(1);
-  }
-  50% {
-    filter: drop-shadow(0 0 40px rgba(250, 204, 21, 1)) drop-shadow(0 0 80px rgba(249, 115, 22, 0.9));
-    transform: scale(1.03);
-  }
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.03); }
 }
 
 .titulo-hub {
   font-size: clamp(1.25rem, 6vw, 2.4rem);
   font-weight: bold;
-  text-shadow:
-    3px 3px 0 rgba(0,0,0,0.95),
-    0 0 20px rgba(250, 204, 21, 0.9),
-    0 0 40px rgba(249, 115, 22, 0.7);
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.9), 0 0 20px rgba(250, 204, 21, 0.7);
   margin-bottom: 0.5rem;
   color: white;
   letter-spacing: 1px;
   line-height: 1.2;
   word-wrap: break-word;
-  animation: tituloPulsa 2.5s ease-in-out infinite;
 }
 
-@keyframes tituloPulsa {
-  0%, 100% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7); }
-  50% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 30px rgba(250, 204, 21, 1), 0 0 60px rgba(249, 115, 22, 1); }
+@media (min-width: 768px) {
+  .titulo-hub {
+    text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7);
+    animation: tituloPulsa 2.5s ease-in-out infinite;
+  }
+  @keyframes tituloPulsa {
+    0%, 100% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7); }
+    50% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 30px rgba(250, 204, 21, 1), 0 0 60px rgba(249, 115, 22, 1); }
+  }
 }
 
 .subtitulo-hub {
@@ -418,7 +354,7 @@ body {
   color: #fde68a;
   font-style: italic;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 6px rgba(0,0,0,0.95);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
   line-height: 1.4;
 }
 
@@ -428,14 +364,18 @@ body {
   max-width: 700px;
   margin: 0 auto;
   padding: 0.8rem 1.1rem;
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(0, 0, 0, 0.7);
   border-radius: var(--radio);
   border: 2px solid rgba(250, 204, 21, 0.6);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
   line-height: 1.5;
-  box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
+}
+@media (min-width: 768px) {
+  .versiculo-hub {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
+  }
 }
 .versiculo-hub strong { color: #facc15; }
 
@@ -463,7 +403,6 @@ body {
   background: linear-gradient(90deg, transparent, #facc15, transparent);
   margin: 0.8rem auto 0;
   border-radius: 50px;
-  box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
 }
 
 /* =========================================================
@@ -497,8 +436,6 @@ body {
 
 .juego-card {
   background: linear-gradient(135deg, rgba(15, 10, 25, 0.9), rgba(35, 18, 22, 0.8));
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
   border: 3px solid rgba(250, 204, 21, 0.7);
   border-radius: 20px;
   padding: 1.5rem 1.2rem;
@@ -507,20 +444,25 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  box-shadow:
-    0 10px 30px rgba(0,0,0,0.7),
-    0 0 20px rgba(250, 204, 21, 0.4),
-    inset 0 0 25px rgba(250, 204, 21, 0.1);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.6);
   text-decoration: none;
   color: inherit;
   display: block;
   width: 100%;
   -webkit-tap-highlight-color: transparent;
+  contain: layout style paint;
 }
 
 @media (min-width: 768px) {
   .juego-card {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow:
+      0 10px 30px rgba(0,0,0,0.7),
+      0 0 20px rgba(250, 204, 21, 0.4),
+      inset 0 0 25px rgba(250, 204, 21, 0.1);
     animation: flotar 4s ease-in-out infinite;
+    will-change: transform;
   }
   .juego-card:nth-child(1) { animation-delay: 0s; }
   .juego-card:nth-child(2) { animation-delay: 0.4s; }
@@ -529,20 +471,20 @@ body {
   .juego-card:nth-child(5) { animation-delay: 1.6s; }
   .juego-card:nth-child(6) { animation-delay: 2s; }
   .juego-card:nth-child(7) { animation-delay: 2.4s; }
+
+  .juego-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    border-color: #facc15;
+    box-shadow:
+      0 20px 45px rgba(0,0,0,0.8),
+      0 0 40px rgba(250, 204, 21, 0.9),
+      inset 0 0 40px rgba(250, 204, 21, 0.25);
+  }
 }
 
 @keyframes flotar {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-10px); }
-}
-
-.juego-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  border-color: #facc15;
-  box-shadow:
-    0 20px 45px rgba(0,0,0,0.8),
-    0 0 40px rgba(250, 204, 21, 0.9),
-    inset 0 0 40px rgba(250, 204, 21, 0.25);
 }
 
 .juego-card > * { position: relative; z-index: 2; }
@@ -552,19 +494,18 @@ body {
   line-height: 1;
   display: block;
   margin: 0 auto 0.8rem;
-  filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.9));
 }
-
 @media (min-width: 768px) {
   .juego-icono {
     font-size: 4.5rem;
+    filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.9));
     animation: iconoPulsa 2.5s ease-in-out infinite;
+    will-change: transform;
   }
-}
-
-@keyframes iconoPulsa {
-  0%, 100% { transform: scale(1) rotate(-3deg); }
-  50% { transform: scale(1.1) rotate(3deg); }
+  @keyframes iconoPulsa {
+    0%, 100% { transform: scale(1) rotate(-3deg); }
+    50% { transform: scale(1.1) rotate(3deg); }
+  }
 }
 
 .juego-titulo {
@@ -572,7 +513,7 @@ body {
   font-weight: bold;
   color: #fef3c7;
   margin-bottom: 0.5rem;
-  text-shadow: 2px 2px 5px rgba(0,0,0,0.95);
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
   line-height: 1.3;
   word-wrap: break-word;
 }
@@ -582,7 +523,7 @@ body {
   color: #fed7aa;
   line-height: 1.45;
   margin-bottom: 0.9rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
 }
 
 .juego-versiculo {
@@ -614,52 +555,31 @@ body {
   touch-action: manipulation;
 }
 
-/* Tarjeta especial del León de Judá */
+/* Tarjetas especiales */
 .juego-card.leon-card {
   border-color: #f59e0b;
   background: linear-gradient(135deg, rgba(120, 53, 15, 0.5), rgba(180, 83, 9, 0.3));
 }
-
-.juego-card.leon-card:hover {
-  border-color: #fbbf24;
-  box-shadow:
-    0 20px 45px rgba(0,0,0,0.8),
-    0 0 40px rgba(251, 191, 36, 0.9),
-    inset 0 0 40px rgba(251, 191, 36, 0.25);
-}
-
 .juego-card.leon-card .btn-jugar {
   background: linear-gradient(135deg, #f59e0b, #b45309);
   color: white;
   box-shadow: 0 5px 0 #78350f, 0 8px 18px rgba(0,0,0,0.5);
 }
 
-/* Tarjeta especial de las Murallas de Jericó */
 .juego-card.jerico-card {
   border-color: #ca8a04;
   background: linear-gradient(135deg, rgba(80, 60, 20, 0.5), rgba(120, 90, 30, 0.3));
 }
-
-.juego-card.jerico-card:hover {
-  border-color: #eab308;
-  box-shadow:
-    0 20px 45px rgba(0,0,0,0.8),
-    0 0 40px rgba(234, 179, 8, 0.9),
-    inset 0 0 40px rgba(234, 179, 8, 0.25);
-}
-
 .juego-card.jerico-card .btn-jugar {
   background: linear-gradient(135deg, #ca8a04, #854d0e);
   color: white;
   box-shadow: 0 5px 0 #422006, 0 8px 18px rgba(0,0,0,0.5);
 }
 
-/* Tarjeta de la Radio */
 .juego-card.radio-card {
   border-color: var(--celeste);
   background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(59, 130, 246, 0.25));
 }
-
 .juego-card.radio-card .btn-jugar {
   background: linear-gradient(135deg, #06b6d4, #3b82f6);
   color: white;
@@ -667,7 +587,7 @@ body {
 }
 
 /* =========================================================
-   EFECTOS DE CLIC
+   EFECTOS DE CLIC — activos en todos los dispositivos
    ========================================================= */
 .rayo-click {
   position: fixed;
@@ -677,20 +597,19 @@ body {
   z-index: 9999;
   animation: rayoClickCae 0.8s ease-out forwards;
 }
-
 .rayo-click svg {
   display: block;
   overflow: visible;
-  filter:
-    drop-shadow(0 0 10px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 25px rgba(255, 240, 200, 1))
-    drop-shadow(0 0 50px rgba(255, 200, 100, 0.95));
+  filter: drop-shadow(0 0 10px rgba(255, 240, 200, 0.9));
 }
-
+@media (max-width: 599px) {
+  .rayo-click svg {
+    filter: drop-shadow(0 0 6px rgba(255, 240, 200, 0.8));
+  }
+}
 @keyframes rayoClickCae {
   0% { opacity: 0; transform: scaleY(0.2); }
   10% { opacity: 1; transform: scaleY(1); }
-  30% { opacity: 0.5; }
   45% { opacity: 1; }
   100% { opacity: 0; }
 }
@@ -706,7 +625,6 @@ body {
   z-index: 9999;
   animation: chispaVuela 0.9s ease-out forwards;
 }
-
 @keyframes chispaVuela {
   0% { opacity: 1; transform: translate(0, 0) scale(1); }
   100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.1); }
@@ -716,15 +634,11 @@ body {
   position: fixed;
   inset: 0;
   background: radial-gradient(circle at var(--x) var(--y),
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 230, 180, 0.9) 15%,
-    rgba(255, 180, 100, 0.5) 30%,
-    transparent 60%);
+    rgba(255, 255, 255, 0.9) 0%, transparent 50%);
   pointer-events: none;
   z-index: 9998;
   animation: destelloClick 0.7s ease-out forwards;
 }
-
 @keyframes destelloClick {
   0% { opacity: 0; }
   10% { opacity: 1; }
@@ -738,28 +652,37 @@ footer {
   text-align: center;
   padding: 1.5rem 1rem;
   background: rgba(0, 0, 0, 0.9);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   border-top: 3px solid rgba(250, 204, 21, 0.7);
   position: relative;
   z-index: 5;
   margin-top: auto;
+}
+@media (min-width: 768px) {
+  footer {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
 }
 
 footer .footer-logo {
   max-width: 180px;
   width: 55%;
   height: auto;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   margin-bottom: 0.8rem;
-  filter: drop-shadow(0 0 18px rgba(250, 204, 21, 0.7));
+}
+@media (min-width: 768px) {
+  footer .footer-logo {
+    filter: drop-shadow(0 0 18px rgba(250, 204, 21, 0.7));
+  }
 }
 
 footer p {
   color: #fde68a;
   font-size: clamp(0.75rem, 2.5vw, 0.9rem);
   margin-bottom: 0.4rem;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
   line-height: 1.4;
 }
 footer strong { color: #facc15; }
@@ -782,17 +705,18 @@ footer .credito {
   .juego-descripcion { font-size: 0.78rem; }
   .btn-jugar { padding: 0.55rem 1.2rem; font-size: 0.8rem; }
   .logo-shock-grande { max-width: 240px; }
-  .fuego-cima { width: 180px; height: 180px; }
-  .montana-sinai { min-height: 240px; }
+  .montana-sinai { min-height: 200px; height: 38vh; }
 }
 
-@media (max-width: 768px) {
-  .nube-espesa { animation-duration: 90s; }
-  .columna-humo { filter: blur(35px); }
-}
-
+/* =========================================================
+   ACCESIBILIDAD
+   ========================================================= */
 @media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 </style>
 </head>
@@ -806,8 +730,6 @@ footer .credito {
   <div class="nube-espesa nube-e1"></div>
   <div class="nube-espesa nube-e2"></div>
   <div class="nube-espesa nube-e3"></div>
-  <div class="nube-espesa nube-e4"></div>
-  <div class="nube-espesa nube-e5"></div>
 </div>
 
 <!-- MONTAÑA DEL SINAÍ -->
@@ -816,95 +738,46 @@ footer .credito {
     <defs>
       <linearGradient id="rocaPrincipal" x1="0%" y1="0%" x2="0%" y2="100%">
         <stop offset="0%" stop-color="#c8744a"/>
-        <stop offset="25%" stop-color="#a0522d"/>
-        <stop offset="55%" stop-color="#8b4513"/>
-        <stop offset="80%" stop-color="#6b3410"/>
+        <stop offset="30%" stop-color="#a0522d"/>
+        <stop offset="60%" stop-color="#8b4513"/>
         <stop offset="100%" stop-color="#3a1a08"/>
       </linearGradient>
       <linearGradient id="rocaIluminada" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stop-color="#e89a6a"/>
-        <stop offset="50%" stop-color="#c8744a"/>
         <stop offset="100%" stop-color="#a0522d"/>
       </linearGradient>
-      <linearGradient id="rocaSombra" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#6b3410"/>
-        <stop offset="100%" stop-color="#2a1405"/>
-      </linearGradient>
-      <filter id="texturaRoca" x="0%" y="0%" width="100%" height="100%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" seed="2" result="noise"/>
-        <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise"/>
-        <feComponentTransfer in="grayNoise" result="strongNoise">
-          <feFuncA type="linear" slope="0.35" intercept="0"/>
-        </feComponentTransfer>
-        <feComposite in="strongNoise" in2="SourceGraphic" operator="in" result="rockTexture"/>
-        <feBlend in="SourceGraphic" in2="rockTexture" mode="multiply"/>
-      </filter>
-      <filter id="relieve3D">
-        <feGaussianBlur in="SourceAlpha" stdDeviation="2" result="blur"/>
-        <feOffset dx="2" dy="3" result="offsetBlur"/>
-        <feComposite in="SourceGraphic" in2="offsetBlur" operator="over"/>
-      </filter>
     </defs>
 
-    <path d="M0,500 L100,420 L200,460 L320,380 L450,420 L560,350 L680,400 L800,340 L920,390 L1050,330 L1180,400 L1300,360 L1420,430 L1520,380 L1600,440 L1600,700 L0,700 Z"
-          fill="url(#rocaSombra)" opacity="0.7"/>
+    <path d="M0,500 L150,420 L300,460 L450,380 L600,420 L750,350 L900,400 L1050,340 L1200,400 L1350,370 L1500,440 L1600,420 L1600,700 L0,700 Z"
+          fill="#2a1405" opacity="0.85"/>
 
-    <path d="M0,550 L120,450 L220,490 L340,400 L480,440 L600,370 L720,430 L840,360 L960,410 L1100,350 L1220,420 L1340,380 L1460,450 L1560,410 L1600,480 L1600,700 L0,700 Z"
-          fill="url(#rocaSombra)" opacity="0.85" filter="url(#texturaRoca)"/>
+    <path d="M0,560 L140,470 L280,510 L420,420 L560,470 L700,390 L840,450 L980,380 L1120,440 L1260,400 L1400,470 L1520,430 L1600,490 L1600,700 L0,700 Z"
+          fill="#4a2010" opacity="0.95"/>
 
-    <g filter="url(#relieve3D)">
-      <path d="M0,700 L80,620 L160,580 L240,540 L320,510 L400,470 L480,430 L540,380 L580,340 L620,300 L660,270 L700,250 L730,240 L760,250 L800,280 L840,320 L880,360 L920,400 L970,430 L1020,460 L1080,480 L1140,500 L1200,530 L1270,560 L1340,590 L1420,630 L1500,670 L1600,700 Z"
-            fill="url(#rocaPrincipal)"/>
+    <path d="M0,700 L120,600 L240,550 L360,500 L480,440 L560,390 L620,330 L680,280 L720,250 L760,240 L800,260 L840,300 L900,360 L960,420 L1020,460 L1100,500 L1180,540 L1280,580 L1380,620 L1480,660 L1600,700 Z"
+          fill="url(#rocaPrincipal)"/>
 
-      <path d="M540,380 L580,340 L620,300 L660,270 L700,250 L730,240 L760,250 L800,280 L840,320 L880,360 L920,400 L970,430 L1020,460 L970,470 L900,440 L840,400 L780,360 L720,330 L660,310 L600,340 L560,380 Z"
-            fill="url(#rocaIluminada)" opacity="0.85"/>
+    <path d="M560,390 L620,330 L680,280 L720,250 L760,240 L800,260 L840,300 L900,360 L960,420 L1000,450 L940,440 L870,400 L800,350 L740,310 L680,300 L620,340 L580,390 Z"
+          fill="url(#rocaIluminada)" opacity="0.8"/>
 
-      <g stroke="#4a2010" stroke-width="2" fill="none" opacity="0.55">
-        <path d="M700,250 L680,320 L690,400 L670,500 L680,600 L690,700"/>
-        <path d="M760,250 L780,340 L790,450 L780,560 L770,700"/>
-        <path d="M660,270 L640,360 L630,460 L620,570 L610,700"/>
-        <path d="M800,280 L830,380 L840,490 L830,600 L820,700"/>
-        <path d="M580,340 L560,440 L550,540 L540,640 L530,700"/>
-        <path d="M880,360 L910,470 L920,580 L910,690"/>
-      </g>
-
-      <g fill="#4a2010" opacity="0.35">
-        <ellipse cx="700" cy="500" rx="60" ry="80"/>
-        <ellipse cx="850" cy="450" rx="50" ry="70"/>
-        <ellipse cx="600" cy="550" rx="55" ry="75"/>
-      </g>
-
-      <g fill="#e89a6a" opacity="0.35">
-        <ellipse cx="720" cy="350" rx="40" ry="55"/>
-        <ellipse cx="780" cy="400" rx="35" ry="50"/>
-      </g>
+    <g stroke="#4a2010" stroke-width="2" fill="none" opacity="0.5">
+      <path d="M700,250 L680,340 L690,450 L670,580 L680,700"/>
+      <path d="M760,240 L780,360 L790,490 L780,620 L770,700"/>
+      <path d="M640,270 L620,380 L610,510 L600,640 L590,700"/>
+      <path d="M820,280 L850,400 L860,530 L850,660 L840,700"/>
     </g>
-
-    <ellipse cx="800" cy="720" rx="900" ry="80" fill="rgba(60, 40, 30, 0.5)" filter="blur(30px)"/>
-    <ellipse cx="730" cy="250" rx="180" ry="80" fill="rgba(255, 200, 100, 0.4)" filter="blur(30px)"/>
-    <ellipse cx="730" cy="240" rx="90" ry="40" fill="rgba(255, 240, 180, 0.55)" filter="blur(15px)"/>
   </svg>
 </div>
 
 <div class="humo-monte" id="humo-monte"></div>
 
-<div class="fuego-cima">
-  <div class="llama llama-1"></div>
-  <div class="llama llama-2"></div>
-  <div class="llama llama-3"></div>
-  <div class="brillo-cima"></div>
-</div>
-
-<div class="luz-divina"></div>
-
 <div class="relampago-cielo" id="relampago-cielo"></div>
 <div class="flash-atmosfera" id="flash-atmosfera"></div>
-<div class="pulso-bocina" id="pulso-bocina"></div>
 <div class="tormenta" id="tormenta"></div>
 
 <!-- HEADER -->
 <header class="header-hub">
-  <img src="logo-shock.png" alt="Shock 99.5 FM" class="logo-shock-grande">
+  <img src="logo-shock.png" alt="Shock 99.5 FM" class="logo-shock-grande" width="300" height="300" fetchpriority="high" decoding="async">
   <h1 class="titulo-hub">⚡ PEQUEÑOS EXPLORADORES SHOCK ⚡</h1>
   <p class="subtitulo-hub">🎮 Nuestros Juegos Bíblicos Interactivos 🎮</p>
   <p class="versiculo-hub">
@@ -918,74 +791,67 @@ footer .credito {
 <!-- GRID DE JUEGOS -->
 <main class="juegos-grid">
 
-  <!-- 1: Pequeños Exploradores Shock -->
   <a href="https://creadoryhwh.github.io/peque-osexploradoresshock.github.io/" target="_blank" rel="noopener" class="juego-card">
     <span class="juego-icono">🏃</span>
     <h3 class="juego-titulo">Pequeños Exploradores Shock</h3>
     <p class="juego-descripcion">Corre con el apóstol Pablo y supera los 8 obstáculos hacia el Trofeo THEOS LOGOS.</p>
     <span class="juego-versiculo">📖 1 Corintios 9:24</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 2: El Buen Pastor y la Oveja Perdida -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Oveja-Perdida.io/" target="_blank" rel="noopener" class="juego-card">
     <span class="juego-icono">🐑</span>
     <h3 class="juego-titulo">El Buen Pastor y la Oveja Perdida</h3>
     <p class="juego-descripcion">Ayuda al Buen Pastor a encontrar a su ovejita perdida en la parábola de Jesús.</p>
     <span class="juego-versiculo">📖 Lucas 15:4</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 3: El Llamado a las Orillas del Mar -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Pescadores.github.io/" target="_blank" rel="noopener" class="juego-card">
     <span class="juego-icono">🎣</span>
     <h3 class="juego-titulo">El Llamado a las Orillas del Mar</h3>
     <p class="juego-descripcion">Acompaña a Pedro y Andrés cuando Jesús los llamó a ser pescadores de hombres.</p>
     <span class="juego-versiculo">📖 Mateo 4:18-20</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 4: Los Ecos del Monte Sinaí -->
   <a href="https://creadoryhwh.github.io/peque-osexploradoresshockmoises.github.io/" target="_blank" rel="noopener" class="juego-card">
     <span class="juego-icono">⛰️</span>
     <h3 class="juego-titulo">Los Ecos del Monte Sinaí</h3>
     <p class="juego-descripcion">Sube al monte con Moisés y escucha la voz de Dios entre truenos y fuego.</p>
     <span class="juego-versiculo">📖 Éxodo 19:18</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 5: Jesús el León de Judá -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-leon.github.io/" target="_blank" rel="noopener" class="juego-card leon-card">
     <span class="juego-icono">🦁</span>
     <h3 class="juego-titulo">Jesús el León de Judá</h3>
     <p class="juego-descripcion">Descubre por qué Jesús es llamado el León de Judá y vive una aventura de fe y valentía.</p>
     <span class="juego-versiculo">📖 Apocalipsis 5:5</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 6: Murallas de Jericó (NUEVO) -->
   <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Jerico-github.io/" target="_blank" rel="noopener" class="juego-card jerico-card">
     <span class="juego-icono">🏰</span>
     <h3 class="juego-titulo">Murallas de Jericó</h3>
     <p class="juego-descripcion">Acompaña a Josué y al pueblo de Israel mientras las murallas caen por la fe.</p>
     <span class="juego-versiculo">📖 Josué 6:20</span>
-    <button class="btn-jugar">▶️ Jugar ahora</button>
+    <button class="btn-jugar" type="button">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 7: Shock 99.5 FM (Radio) -->
   <a href="https://tunein.com/radio/Shock-Fm-995-s346433/?lang=es" target="_blank" rel="noopener" class="juego-card radio-card">
     <span class="juego-icono">📻</span>
     <h3 class="juego-titulo">Shock 99.5 FM</h3>
     <p class="juego-descripcion">Escucha Shock 99.5 FM en vivo: música, historias bíblicas y alabanzas para niños.</p>
     <span class="juego-versiculo">📖 Marcos 16:15</span>
-    <button class="btn-jugar">🎵 Sintonizar</button>
+    <button class="btn-jugar" type="button">🎵 Sintonizar</button>
   </a>
 
 </main>
 
 <!-- FOOTER -->
 <footer>
-  <img src="logo-shock.png" alt="Shock 99.5 FM" class="footer-logo">
+  <img src="logo-shock.png" alt="Shock 99.5 FM" class="footer-logo" width="180" height="180" loading="lazy" decoding="async">
   <p>📻 <strong>Shock 99.5 FM</strong> — Una Radio con Propósito</p>
   <p>🌟 Pequeños Exploradores Shock | Juegos Bíblicos 🌟</p>
   <p class="credito">"Dejad a los niños venir a mí, y no se lo impidáis; porque de los tales es el reino de Dios." — Marcos 10:14</p>
@@ -993,24 +859,30 @@ footer .credito {
 
 <script>
 /* =========================================================
-   ESTRELLAS BRILLANTES (tipo luciérnagas)
+   DETECCIÓN DE DISPOSITIVO
+   ========================================================= */
+const esMovil = window.matchMedia('(max-width: 599px)').matches;
+const esPC = window.matchMedia('(min-width: 1024px)').matches;
+const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* =========================================================
+   ESTRELLAS
    ========================================================= */
 function generarEstrellas() {
   const contenedor = document.getElementById('estrellas');
-  const total = window.innerWidth < 600 ? 100 : 200;
+  if (!contenedor) return;
+
+  const total = esMovil ? 50 : (esPC ? 180 : 100);
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < total; i++) {
     const estrella = document.createElement('div');
     estrella.className = 'estrella';
 
-    const esGrande = Math.random() > 0.85;
-    const esFugaz = Math.random() > 0.9;
-
+    const esGrande = !esMovil && Math.random() > 0.85;
     if (esGrande) estrella.classList.add('grande');
-    if (esFugaz) estrella.classList.add('fugaz');
 
-    const tamaño = esGrande
-      ? 3 + Math.random() * 3
-      : 1 + Math.random() * 2;
+    const tamaño = esGrande ? 3 + Math.random() * 3 : 1 + Math.random() * 2;
 
     estrella.style.width = tamaño + 'px';
     estrella.style.height = tamaño + 'px';
@@ -1019,42 +891,47 @@ function generarEstrellas() {
     estrella.style.animationDuration = (2 + Math.random() * 4) + 's';
     estrella.style.animationDelay = Math.random() * 4 + 's';
 
-    contenedor.appendChild(estrella);
+    fragment.appendChild(estrella);
   }
+  contenedor.appendChild(fragment);
 }
 
 /* =========================================================
-   HUMO
+   HUMO (solo tablet/PC)
    ========================================================= */
 function generarHumo() {
+  if (esMovil) return;
   const contenedor = document.getElementById('humo-monte');
   if (!contenedor) return;
-  const total = window.innerWidth < 600 ? 8 : 14;
+
+  const total = esPC ? 10 : 6;
+  const fragment = document.createDocumentFragment();
+
   for (let i = 0; i < total; i++) {
     const humo = document.createElement('div');
     humo.className = 'columna-humo';
-    const tamaño = 200 + Math.random() * 300;
+    const tamaño = 200 + Math.random() * 250;
     humo.style.width = tamaño + 'px';
     humo.style.height = tamaño + 'px';
     humo.style.left = (35 + Math.random() * 30) + '%';
     humo.style.background = `radial-gradient(circle at 30% 30%,
-      rgba(100, 60, 40, 0.85) 0%,
-      rgba(70, 40, 25, 0.65) 30%,
-      rgba(50, 25, 15, 0.45) 60%,
+      rgba(100, 60, 40, 0.8) 0%,
+      rgba(60, 35, 20, 0.5) 50%,
       transparent 90%)`;
     humo.style.animationDelay = (Math.random() * 14) + 's';
     humo.style.animationDuration = (12 + Math.random() * 6) + 's';
-    contenedor.appendChild(humo);
+    fragment.appendChild(humo);
   }
+  contenedor.appendChild(fragment);
 }
 
 /* =========================================================
-   RAYOS
+   RAYOS REALISTAS — activos en todos los dispositivos
    ========================================================= */
-function generarPathRayo(ancho, alto) {
+function generarPathRayo(ancho, alto, numSegmentos) {
   const puntos = [];
-  const numSegmentos = 8 + Math.floor(Math.random() * 6);
   const centroBase = ancho / 2;
+
   for (let i = 0; i <= numSegmentos; i++) {
     const y = (alto / numSegmentos) * i;
     const amplitud = 45 * (1 - i / numSegmentos) + 15;
@@ -1063,35 +940,46 @@ function generarPathRayo(ancho, alto) {
     else if (i === numSegmentos) puntos.push({ x: centroBase + (Math.random() - 0.5) * 60, y: alto });
     else puntos.push({ x, y });
   }
+
   let d = `M ${puntos[0].x} ${puntos[0].y}`;
   for (let i = 1; i < puntos.length; i++) d += ` L ${puntos[i].x} ${puntos[i].y}`;
   return { d, puntos };
 }
 
-function generarPathRama(puntoInicio, direccion, alto) {
+function generarPathRama(puntoInicio, direccion, alto, numSegmentos) {
   const puntos = [{ x: puntoInicio.x, y: puntoInicio.y }];
-  const numSegmentos = 4 + Math.floor(Math.random() * 3);
   const separacion = (Math.random() * 50 + 35) * direccion;
+
   for (let i = 1; i <= numSegmentos; i++) {
     const y = puntoInicio.y + (alto / numSegmentos) * i;
     const x = puntoInicio.x + separacion * (i / numSegmentos) + (Math.random() - 0.5) * 25;
     puntos.push({ x, y });
   }
+
   let d = `M ${puntos[0].x} ${puntos[0].y}`;
   for (let i = 1; i < puntos.length; i++) d += ` L ${puntos[i].x} ${puntos[i].y}`;
   return d;
 }
 
-function generarSVGRayo(ancho, alto) {
-  const { d: pathPrincipal, puntos } = generarPathRayo(ancho, alto);
-  const numRamas = 3 + Math.floor(Math.random() * 3);
+function generarSVGRayo(ancho, alto, esMovil) {
+  // Menos segmentos y ramas en móvil para no trabar
+  const numSegmentos = esMovil
+    ? 6 + Math.floor(Math.random() * 3)
+    : 8 + Math.floor(Math.random() * 5);
+  const numRamas = esMovil
+    ? 2 + Math.floor(Math.random() * 2)
+    : 3 + Math.floor(Math.random() * 3);
+  const numSegmentosRama = esMovil ? 3 : 4 + Math.floor(Math.random() * 3);
+
+  const { d: pathPrincipal, puntos } = generarPathRayo(ancho, alto, numSegmentos);
   const ramas = [];
+
   for (let i = 0; i < numRamas; i++) {
     const idx = 2 + Math.floor(Math.random() * (puntos.length - 4));
     const puntoRama = puntos[idx];
     const direccion = Math.random() > 0.5 ? 1 : -1;
     const altoRama = alto * (0.15 + Math.random() * 0.3);
-    ramas.push(generarPathRama(puntoRama, direccion, altoRama));
+    ramas.push(generarPathRama(puntoRama, direccion, altoRama, numSegmentosRama));
   }
 
   const gid = 'g' + Math.random().toString(36).substring(2, 9);
@@ -1121,8 +1009,15 @@ function lanzarRayo(esGrande = false) {
   const tormenta = document.getElementById('tormenta');
   if (!tormenta) return;
 
-  const ancho = esGrande ? 300 + Math.random() * 300 : 120 + Math.random() * 180;
-  const alto = window.innerHeight * (esGrande ? 1.1 : 0.85);
+  // En móvil los rayos son más pequeños para no saturar
+  let ancho, alto;
+  if (esMovil) {
+    ancho = esGrande ? 180 + Math.random() * 150 : 100 + Math.random() * 100;
+    alto = window.innerHeight * (esGrande ? 0.95 : 0.75);
+  } else {
+    ancho = esGrande ? 300 + Math.random() * 300 : 120 + Math.random() * 180;
+    alto = window.innerHeight * (esGrande ? 1.1 : 0.85);
+  }
   const left = Math.random() * (window.innerWidth - ancho);
 
   const rayo = document.createElement('div');
@@ -1130,19 +1025,18 @@ function lanzarRayo(esGrande = false) {
   rayo.style.left = left + 'px';
   rayo.style.top = '-50px';
   rayo.style.width = ancho + 'px';
-  rayo.innerHTML = generarSVGRayo(ancho, alto);
+  rayo.innerHTML = generarSVGRayo(ancho, alto, esMovil);
   tormenta.appendChild(rayo);
 
   dispararFlashAtmosfera(esGrande);
   dispararRelampagoCielo();
-
-  if (Math.random() > 0.6) dispararPulsoBocina();
 
   setTimeout(() => rayo.remove(), 1800);
 }
 
 function dispararFlashAtmosfera(grande) {
   const flash = document.getElementById('flash-atmosfera');
+  if (!flash) return;
   flash.classList.remove('activo');
   void flash.offsetWidth;
   flash.classList.add('activo');
@@ -1153,6 +1047,7 @@ function dispararFlashAtmosfera(grande) {
 
 function dispararRelampagoCielo() {
   const relampago = document.getElementById('relampago-cielo');
+  if (!relampago) return;
   relampago.style.opacity = '1';
   setTimeout(() => relampago.style.opacity = '0', 100);
   setTimeout(() => {
@@ -1161,32 +1056,35 @@ function dispararRelampagoCielo() {
   }, 200);
 }
 
-function dispararPulsoBocina() {
-  const pulso = document.getElementById('pulso-bocina');
-  pulso.classList.remove('activo');
-  void pulso.offsetWidth;
-  pulso.classList.add('activo');
-}
-
 function cicloTormenta() {
+  if (prefiereMenosMovimiento) return;
+
   lanzarRayo(false);
 
-  if (Math.random() > 0.75) {
+  // En móvil menos rayos simultáneos
+  const probExtra = esMovil ? 0.85 : 0.75;
+  const probTriple = esMovil ? 0.95 : 0.9;
+
+  if (Math.random() > probExtra) {
     setTimeout(() => lanzarRayo(true), 400 + Math.random() * 600);
   }
-
-  if (Math.random() > 0.9) {
+  if (Math.random() > probTriple) {
     setTimeout(() => lanzarRayo(false), 500 + Math.random() * 400);
   }
 
-  const delay = 2500 + Math.random() * 3500;
+  // En móvil esperamos un poco más entre rayos para no saturar
+  const delay = esMovil
+    ? 4000 + Math.random() * 4000
+    : 2500 + Math.random() * 3500;
   setTimeout(cicloTormenta, delay);
 }
 
 /* =========================================================
-   EFECTO DE CLIC
+   EFECTO DE CLIC — activo en todos los dispositivos
    ========================================================= */
 function efectoRayoClick(x, y) {
+  if (navigator.vibrate) navigator.vibrate(30);
+
   const destello = document.createElement('div');
   destello.className = 'destello-click';
   destello.style.setProperty('--x', x + 'px');
@@ -1194,30 +1092,29 @@ function efectoRayoClick(x, y) {
   document.body.appendChild(destello);
   setTimeout(() => destello.remove(), 800);
 
-  const anchoRayo = 120;
+  const anchoRayo = esMovil ? 90 : 120;
   const altoRayo = window.innerHeight;
   const rayo = document.createElement('div');
   rayo.className = 'rayo-click';
   rayo.style.left = (x - anchoRayo / 2) + 'px';
   rayo.style.top = '-50px';
   rayo.style.width = anchoRayo + 'px';
-  rayo.innerHTML = generarSVGRayo(anchoRayo, altoRayo);
+  rayo.innerHTML = generarSVGRayo(anchoRayo, altoRayo, esMovil);
   document.body.appendChild(rayo);
   setTimeout(() => rayo.remove(), 900);
 
-  for (let i = 0; i < 20; i++) {
+  // Menos chispas en móvil
+  const numChispas = esMovil ? 12 : 20;
+  for (let i = 0; i < numChispas; i++) {
     const chispa = document.createElement('div');
     chispa.className = 'chispa';
     chispa.style.left = x + 'px';
     chispa.style.top = y + 'px';
 
-    const angulo = (Math.PI * 2 * i) / 20 + Math.random() * 0.6;
+    const angulo = (Math.PI * 2 * i) / numChispas + Math.random() * 0.6;
     const distancia = 60 + Math.random() * 150;
-    const tx = Math.cos(angulo) * distancia;
-    const ty = Math.sin(angulo) * distancia;
-
-    chispa.style.setProperty('--tx', tx + 'px');
-    chispa.style.setProperty('--ty', ty + 'px');
+    chispa.style.setProperty('--tx', Math.cos(angulo) * distancia + 'px');
+    chispa.style.setProperty('--ty', Math.sin(angulo) * distancia + 'px');
     chispa.style.animationDelay = (Math.random() * 0.1) + 's';
     chispa.style.animationDuration = (0.6 + Math.random() * 0.5) + 's';
 
@@ -1227,8 +1124,6 @@ function efectoRayoClick(x, y) {
 
   dispararFlashAtmosfera(true);
   dispararRelampagoCielo();
-
-  if (navigator.vibrate) navigator.vibrate([50, 30, 80]);
 }
 
 document.querySelectorAll('.juego-card').forEach(card => {
@@ -1239,12 +1134,12 @@ document.querySelectorAll('.juego-card').forEach(card => {
     const y = e.clientY || e.pageY || 0;
 
     efectoRayoClick(x, y);
-    this.style.transform = 'scale(0.95)';
+    this.style.transform = 'scale(0.97)';
 
     setTimeout(() => {
       this.style.transform = '';
-      if (href) window.open(href, '_blank');
-    }, 500);
+      if (href) window.open(href, '_blank', 'noopener');
+    }, esMovil ? 300 : 450);
   });
 });
 
@@ -1254,36 +1149,60 @@ document.querySelectorAll('.juego-card').forEach(card => {
 window.addEventListener('load', () => {
   generarEstrellas();
   generarHumo();
-  setTimeout(cicloTormenta, 1500);
+
+  if (!prefiereMenosMovimiento) {
+    // Primer rayo un poco más rápido en móvil para que se vea
+    setTimeout(cicloTormenta, esMovil ? 1200 : 1500);
+  }
 
   const cards = document.querySelectorAll('.juego-card');
   cards.forEach((card, i) => {
     card.style.opacity = '0';
-    card.style.transform = 'translateY(40px)';
-    card.style.transition = 'none';
+    card.style.transform = 'translateY(20px)';
     setTimeout(() => {
-      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
-    }, i * 150 + 300);
+    }, i * 100 + 200);
   });
 });
 
 /* =========================================================
-   PARALLAX — SOLO EN PC
+   PARALLAX — SOLO PC CON MOUSE
    ========================================================= */
-if (window.matchMedia('(min-width: 768px)').matches) {
+if (esPC && window.matchMedia('(hover: hover)').matches) {
+  let ticking = false;
   document.addEventListener('mousemove', (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 12;
-    const y = (e.clientY / window.innerHeight - 0.5) * 12;
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
 
-    const montana = document.querySelector('.montana-sinai');
-    const fuego = document.querySelector('.fuego-cima');
-
-    if (montana) montana.style.transform = `translate(${x * 0.4}px, ${y * 0.4}px)`;
-    if (fuego) fuego.style.transform = `translateX(-50%) translate(${x * 0.6}px, ${y * 0.6}px)`;
-  });
+      const montana = document.querySelector('.montana-sinai');
+      if (montana) montana.style.transform = `translate3d(${x * 0.4}px, ${y * 0.4}px, 0)`;
+      ticking = false;
+    });
+  }, { passive: true });
 }
+
+/* =========================================================
+   RESIZE
+   ========================================================= */
+let anchoAnterior = window.innerWidth;
+let timeoutResize;
+window.addEventListener('resize', () => {
+  clearTimeout(timeoutResize);
+  timeoutResize = setTimeout(() => {
+    const anchoActual = window.innerWidth;
+    if (Math.abs(anchoActual - anchoAnterior) > 200) {
+      const contenedor = document.getElementById('estrellas');
+      if (contenedor) contenedor.innerHTML = '';
+      generarEstrellas();
+      anchoAnterior = anchoActual;
+    }
+  }, 300);
+}, { passive: true });
 </script>
 
 </body>
