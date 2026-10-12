@@ -19,6 +19,7 @@
   --azul: #1e3a8a;
   --celeste: #06b6d4;
   --leon: #d97706;
+  --jerico: #a16207;
   --radio: 20px;
 }
 
@@ -41,7 +42,7 @@ body {
 }
 
 /* =========================================================
-   CIELO DE FONDO — MUCHO MÁS OSCURO
+   CIELO DE FONDO — OSCURO
    ========================================================= */
 .cielo-fondo {
   position: fixed;
@@ -62,7 +63,7 @@ body {
 }
 
 /* =========================================================
-   ESTRELLAS — MÁS BRILLANTES, TIPO LUCIÉRNAGAS
+   ESTRELLAS TIPO LUCIÉRNAGAS
    ========================================================= */
 .estrellas {
   position: fixed;
@@ -84,7 +85,6 @@ body {
     0 0 30px rgba(255, 230, 150, 0.4);
 }
 
-/* Estrellas grandes con más brillo */
 .estrella.grande {
   box-shadow:
     0 0 6px rgba(255, 255, 255, 1),
@@ -101,7 +101,6 @@ body {
   100% { opacity: 0.3; transform: scale(0.6); }
 }
 
-/* Destello extra en algunas estrellas */
 @keyframes destelloEstrella {
   0%, 90%, 100% { opacity: 0.4; }
   45% { opacity: 1; box-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(255, 230, 150, 0.8); }
@@ -144,7 +143,7 @@ body {
 }
 
 /* =========================================================
-   MONTAÑA DEL SINAÍ — MÁS VISIBLE
+   MONTAÑA DEL SINAÍ
    ========================================================= */
 .montana-sinai {
   position: fixed;
@@ -529,6 +528,7 @@ body {
   .juego-card:nth-child(4) { animation-delay: 1.2s; }
   .juego-card:nth-child(5) { animation-delay: 1.6s; }
   .juego-card:nth-child(6) { animation-delay: 2s; }
+  .juego-card:nth-child(7) { animation-delay: 2.4s; }
 }
 
 @keyframes flotar {
@@ -632,6 +632,26 @@ body {
   background: linear-gradient(135deg, #f59e0b, #b45309);
   color: white;
   box-shadow: 0 5px 0 #78350f, 0 8px 18px rgba(0,0,0,0.5);
+}
+
+/* Tarjeta especial de las Murallas de Jericó */
+.juego-card.jerico-card {
+  border-color: #ca8a04;
+  background: linear-gradient(135deg, rgba(80, 60, 20, 0.5), rgba(120, 90, 30, 0.3));
+}
+
+.juego-card.jerico-card:hover {
+  border-color: #eab308;
+  box-shadow:
+    0 20px 45px rgba(0,0,0,0.8),
+    0 0 40px rgba(234, 179, 8, 0.9),
+    inset 0 0 40px rgba(234, 179, 8, 0.25);
+}
+
+.juego-card.jerico-card .btn-jugar {
+  background: linear-gradient(135deg, #ca8a04, #854d0e);
+  color: white;
+  box-shadow: 0 5px 0 #422006, 0 8px 18px rgba(0,0,0,0.5);
 }
 
 /* Tarjeta de la Radio */
@@ -943,7 +963,16 @@ footer .credito {
     <button class="btn-jugar">▶️ Jugar ahora</button>
   </a>
 
-  <!-- 6: Shock 99.5 FM (Radio) -->
+  <!-- 6: Murallas de Jericó (NUEVO) -->
+  <a href="https://creadoryhwh.github.io/Peque-os-Exploradores-Shock-Jerico-github.io/" target="_blank" rel="noopener" class="juego-card jerico-card">
+    <span class="juego-icono">🏰</span>
+    <h3 class="juego-titulo">Murallas de Jericó</h3>
+    <p class="juego-descripcion">Acompaña a Josué y al pueblo de Israel mientras las murallas caen por la fe.</p>
+    <span class="juego-versiculo">📖 Josué 6:20</span>
+    <button class="btn-jugar">▶️ Jugar ahora</button>
+  </a>
+
+  <!-- 7: Shock 99.5 FM (Radio) -->
   <a href="https://tunein.com/radio/Shock-Fm-995-s346433/?lang=es" target="_blank" rel="noopener" class="juego-card radio-card">
     <span class="juego-icono">📻</span>
     <h3 class="juego-titulo">Shock 99.5 FM</h3>
@@ -1139,25 +1168,17 @@ function dispararPulsoBocina() {
   pulso.classList.add('activo');
 }
 
-/* =========================================================
-   CICLO DE TORMENTA — MÁS PAUSADO Y NATURAL
-   ========================================================= */
 function cicloTormenta() {
-  // Rayo principal
   lanzarRayo(false);
 
-  // A veces un rayo grande
   if (Math.random() > 0.75) {
     setTimeout(() => lanzarRayo(true), 400 + Math.random() * 600);
   }
 
-  // Ráfaga ocasional (muy rara)
   if (Math.random() > 0.9) {
     setTimeout(() => lanzarRayo(false), 500 + Math.random() * 400);
   }
 
-  // Intervalos más largos y variables (para ambiente natural)
-  // Entre 2.5 y 6 segundos entre rayos
   const delay = 2500 + Math.random() * 3500;
   setTimeout(cicloTormenta, delay);
 }
@@ -1233,8 +1254,6 @@ document.querySelectorAll('.juego-card').forEach(card => {
 window.addEventListener('load', () => {
   generarEstrellas();
   generarHumo();
-
-  // Primera tormenta después de 1.5 segundos
   setTimeout(cicloTormenta, 1500);
 
   const cards = document.querySelectorAll('.juego-card');
