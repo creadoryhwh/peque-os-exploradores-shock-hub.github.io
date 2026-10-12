@@ -31,149 +31,366 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  background: #050510;
+  background: #000;
 }
 
 /* =========================================================
-   CIELO TORMENTOSO
+   IMAGEN DE FONDO (TU IMAGEN DEL SINAÍ)
    ========================================================= */
-.cielo {
+.fondo-imagen {
   position: fixed;
   inset: 0;
-  z-index: -8;
+  z-index: -10;
+  background-image: url('fondo-sinai.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  animation: fondoLatido 8s ease-in-out infinite;
+}
+
+@keyframes fondoLatido {
+  0%, 100% { transform: scale(1.05); filter: brightness(0.85) contrast(1.1); }
+  50% { transform: scale(1.08); filter: brightness(1) contrast(1.15); }
+}
+
+/* Capa oscura para mejor legibilidad */
+.fondo-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -9;
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(255, 120, 0, 0.45) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 0%, rgba(70, 50, 120, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(255, 100, 0, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 55%, rgba(255, 60, 0, 0.18) 0%, transparent 55%),
     linear-gradient(180deg,
-      #030308 0%,
-      #0a0818 15%,
-      #14102a 30%,
-      #1e1230 45%,
-      #2d1533 60%,
-      #4a1e2d 78%,
-      #6b2418 92%,
-      #8b2f14 100%);
-}
-
-.estrellas {
-  position: fixed;
-  inset: 0;
-  z-index: -7;
+      rgba(0, 0, 0, 0.6) 0%,
+      rgba(10, 5, 15, 0.4) 35%,
+      rgba(20, 8, 5, 0.25) 60%,
+      rgba(30, 12, 5, 0.15) 100%);
   pointer-events: none;
-  overflow: hidden;
 }
 
-.estrella {
-  position: absolute;
-  background: white;
-  border-radius: 50%;
-  animation: titilar 3s ease-in-out infinite;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.9);
-}
-
-@keyframes titilar {
-  0%, 100% { opacity: 0.15; transform: scale(0.7); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
-.nubes-capa {
+/* =========================================================
+   MONTAÑA DEL SINAÍ (SILUETA REALISTA)
+   ========================================================= */
+.montana-sinai {
   position: fixed;
-  inset: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 60vh;
   z-index: -6;
   pointer-events: none;
-  overflow: hidden;
+  filter: drop-shadow(0 -10px 60px rgba(255, 120, 40, 0.6));
 }
 
-.nube {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.85;
-  animation: nubeMueve 50s ease-in-out infinite;
+.montana-sinai svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
-.nube-1 { width: 550px; height: 220px; background: radial-gradient(ellipse, rgba(75, 55, 85, 0.9), rgba(35, 20, 45, 0.5) 60%, transparent 80%); top: 8%; left: -12%; }
-.nube-2 { width: 650px; height: 260px; background: radial-gradient(ellipse, rgba(95, 65, 105, 0.9), rgba(45, 25, 55, 0.5) 60%, transparent 80%); top: 22%; right: -18%; animation-delay: 6s; }
-.nube-3 { width: 750px; height: 300px; background: radial-gradient(ellipse, rgba(115, 75, 85, 0.9), rgba(55, 28, 38, 0.6) 60%, transparent 80%); top: 38%; left: 18%; animation-delay: 12s; }
-.nube-4 { width: 600px; height: 240px; background: radial-gradient(ellipse, rgba(145, 85, 65, 0.9), rgba(75, 38, 28, 0.5) 60%, transparent 80%); top: 52%; right: 3%; animation-delay: 18s; }
-.nube-5 { width: 700px; height: 280px; background: radial-gradient(ellipse, rgba(175, 95, 55, 0.9), rgba(95, 45, 18, 0.5) 60%, transparent 80%); top: 62%; left: -8%; animation-delay: 24s; }
-.nube-6 { width: 500px; height: 200px; background: radial-gradient(ellipse, rgba(200, 110, 50, 0.85), rgba(110, 50, 15, 0.5) 60%, transparent 80%); top: 72%; right: 15%; animation-delay: 30s; }
-
-@keyframes nubeMueve {
-  0%, 100% { transform: translateX(0) translateY(0) scale(1); }
-  25% { transform: translateX(50px) translateY(-20px) scale(1.08); }
-  50% { transform: translateX(-40px) translateY(15px) scale(0.95); }
-  75% { transform: translateX(25px) translateY(-10px) scale(1.05); }
-}
-
-.monte-sinai {
+/* =========================================================
+   FUEGO Y HUMO EN LA CIMA DEL MONTE
+   ========================================================= */
+.fuego-cima {
   position: fixed;
+  bottom: 55vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 300px;
+  z-index: -5;
+  pointer-events: none;
+}
+
+.brillo-cima {
+  position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 130%;
-  max-width: 1600px;
-  height: 55vh;
-  z-index: -5;
-  background: linear-gradient(180deg, transparent 0%, rgba(30, 15, 5, 0.4) 15%, rgba(20, 10, 5, 0.85) 40%, #0a0505 70%, #000000 100%);
-  clip-path: polygon(0% 100%, 3% 75%, 8% 62%, 14% 52%, 20% 45%, 26% 38%, 32% 30%, 38% 22%, 44% 14%, 48% 8%, 50% 5%, 52% 8%, 56% 14%, 62% 22%, 68% 30%, 74% 38%, 80% 45%, 86% 52%, 92% 62%, 97% 75%, 100% 100%);
-  filter: drop-shadow(0 0 60px rgba(255, 140, 0, 0.8));
-}
-
-.resplandor-cima {
-  position: fixed;
-  top: 30vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 450px;
-  height: 450px;
-  z-index: -4;
-  background: radial-gradient(circle, rgba(255, 240, 150, 1) 0%, rgba(255, 160, 50, 0.7) 25%, rgba(255, 100, 0, 0.4) 45%, transparent 70%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle,
+    rgba(255, 250, 200, 0.95) 0%,
+    rgba(255, 200, 80, 0.7) 20%,
+    rgba(255, 120, 30, 0.5) 40%,
+    rgba(255, 60, 0, 0.2) 60%,
+    transparent 80%);
   border-radius: 50%;
-  filter: blur(35px);
-  animation: resplandorPulsa 1.6s ease-in-out infinite;
-  pointer-events: none;
+  filter: blur(25px);
+  animation: brilloCimaPulsa 1.4s ease-in-out infinite;
 }
 
-@keyframes resplandorPulsa {
+@keyframes brilloCimaPulsa {
   0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
   50% { transform: translateX(-50%) scale(1.25); opacity: 1; }
 }
 
-.llamas-cima {
-  position: fixed;
-  top: 38vh;
+.llama {
+  position: absolute;
+  bottom: 20%;
+  border-radius: 50% 50% 30% 30%;
+  filter: blur(15px);
+  animation: llamaDanza 1.2s ease-in-out infinite;
+  mix-blend-mode: screen;
+}
+
+.llama-1 {
+  left: 30%;
+  width: 60px;
+  height: 120px;
+  background: radial-gradient(ellipse at bottom,
+    rgba(255, 255, 200, 1) 0%,
+    rgba(255, 200, 60, 0.9) 25%,
+    rgba(255, 100, 20, 0.7) 60%,
+    transparent 100%);
+  animation-delay: 0s;
+}
+
+.llama-2 {
   left: 50%;
   transform: translateX(-50%);
-  font-size: 6rem;
-  z-index: -3;
-  filter: drop-shadow(0 0 45px rgba(255, 100, 0, 1)) drop-shadow(0 0 80px rgba(255, 180, 0, 0.7));
-  animation: llamaArde 0.6s ease-in-out infinite alternate;
+  width: 80px;
+  height: 160px;
+  background: radial-gradient(ellipse at bottom,
+    rgba(255, 255, 220, 1) 0%,
+    rgba(255, 220, 80, 0.95) 25%,
+    rgba(255, 120, 30, 0.75) 60%,
+    transparent 100%);
+  animation-delay: 0.3s;
+}
+
+.llama-3 {
+  right: 30%;
+  width: 60px;
+  height: 120px;
+  background: radial-gradient(ellipse at bottom,
+    rgba(255, 255, 200, 1) 0%,
+    rgba(255, 200, 60, 0.9) 25%,
+    rgba(255, 100, 20, 0.7) 60%,
+    transparent 100%);
+  animation-delay: 0.6s;
+}
+
+@keyframes llamaDanza {
+  0%, 100% {
+    transform: translateY(0) scale(1) rotate(-3deg);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(-15px) scale(1.15) rotate(3deg);
+    opacity: 1;
+  }
+}
+
+/* =========================================================
+   NUBES ESPESAS (Éxodo 19:16)
+   ========================================================= */
+.nubes-espesas {
+  position: fixed;
+  inset: 0;
+  z-index: -8;
   pointer-events: none;
+  overflow: hidden;
 }
 
-@keyframes llamaArde {
-  0% { transform: translateX(-50%) scale(1) rotate(-4deg); opacity: 0.9; }
-  100% { transform: translateX(-50%) scale(1.25) rotate(4deg); opacity: 1; }
+.nube-espesa {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(45px);
+  animation: nubeDensa 60s ease-in-out infinite;
+  mix-blend-mode: multiply;
 }
 
-/* RAYOS */
-.tormenta { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; }
+.nube-e1 {
+  width: 800px;
+  height: 350px;
+  background: radial-gradient(ellipse, rgba(20, 15, 25, 0.95), rgba(10, 5, 15, 0.7) 50%, transparent 80%);
+  top: -5%;
+  left: -15%;
+  animation-delay: 0s;
+}
+
+.nube-e2 {
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(30, 20, 35, 0.95), rgba(15, 8, 20, 0.7) 50%, transparent 80%);
+  top: 5%;
+  right: -20%;
+  animation-delay: 8s;
+}
+
+.nube-e3 {
+  width: 850px;
+  height: 380px;
+  background: radial-gradient(ellipse, rgba(40, 25, 30, 0.9), rgba(20, 10, 15, 0.6) 50%, transparent 80%);
+  top: 20%;
+  left: 10%;
+  animation-delay: 16s;
+}
+
+.nube-e4 {
+  width: 700px;
+  height: 320px;
+  background: radial-gradient(ellipse, rgba(50, 30, 25, 0.9), rgba(25, 12, 10, 0.6) 50%, transparent 80%);
+  top: 35%;
+  right: 5%;
+  animation-delay: 24s;
+}
+
+.nube-e5 {
+  width: 900px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(70, 35, 20, 0.9), rgba(35, 15, 8, 0.6) 50%, transparent 80%);
+  top: 50%;
+  left: -10%;
+  animation-delay: 32s;
+}
+
+@keyframes nubeDensa {
+  0%, 100% { transform: translateX(0) translateY(0) scale(1); opacity: 0.85; }
+  25% { transform: translateX(60px) translateY(-25px) scale(1.1); opacity: 1; }
+  50% { transform: translateX(-50px) translateY(20px) scale(0.95); opacity: 0.9; }
+  75% { transform: translateX(35px) translateY(-15px) scale(1.05); opacity: 1; }
+}
+
+/* =========================================================
+   HUMO DEL MONTE (Éxodo 19:18)
+   ========================================================= */
+.humo-monte {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 65vh;
+  z-index: -7;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(to top, black 40%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top, black 40%, transparent 100%);
+}
+
+.columna-humo {
+  position: absolute;
+  bottom: -10%;
+  border-radius: 50%;
+  filter: blur(50px);
+  animation: humoSube 12s ease-out infinite;
+  opacity: 0;
+}
+
+@keyframes humoSube {
+  0% {
+    transform: translateY(0) scale(0.8) rotate(0deg);
+    opacity: 0;
+  }
+  15% { opacity: 0.7; }
+  50% {
+    transform: translateY(-40vh) scale(1.4) rotate(15deg);
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-80vh) scale(2) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   LUZ Y RESPLANDOR DIVINO
+   ========================================================= */
+.luz-divina {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150vw;
+  height: 80vh;
+  z-index: -6;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 100%,
+    rgba(255, 240, 150, 0.5) 0%,
+    rgba(255, 180, 60, 0.35) 20%,
+    rgba(255, 100, 20, 0.2) 40%,
+    transparent 70%);
+  animation: luzPulsa 1.5s ease-in-out infinite;
+}
+
+@keyframes luzPulsa {
+  0%, 100% { opacity: 0.75; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+}
+
+.resplandor-fuego {
+  position: fixed;
+  top: 30vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 500px;
+  height: 500px;
+  z-index: -5;
+  pointer-events: none;
+  background: radial-gradient(circle,
+    rgba(255, 250, 200, 0.7) 0%,
+    rgba(255, 200, 80, 0.5) 20%,
+    rgba(255, 100, 30, 0.35) 40%,
+    transparent 70%);
+  border-radius: 50%;
+  filter: blur(40px);
+  animation: fuegoPulsa 1.2s ease-in-out infinite;
+}
+
+@keyframes fuegoPulsa {
+  0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.85; }
+  50% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+}
+
+/* =========================================================
+   RAYOS REALISTAS
+   ========================================================= */
+.tormenta { position: fixed; inset: 0; z-index: -4; pointer-events: none; overflow: hidden; }
 
 .relampago-cielo {
-  position: fixed; inset: 0; z-index: -3; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 0%, rgba(200, 220, 255, 0.9) 0%, rgba(150, 180, 255, 0.5) 30%, transparent 65%);
-  opacity: 0; transition: opacity 0.15s ease-out;
+  position: fixed; inset: 0; z-index: -5; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%,
+    rgba(255, 240, 220, 0.95) 0%,
+    rgba(255, 200, 150, 0.6) 25%,
+    rgba(255, 150, 80, 0.3) 50%,
+    transparent 75%);
+  opacity: 0;
+  transition: opacity 0.1s ease-out;
+}
+
+.flash-atmosfera {
+  position: fixed; inset: 0; z-index: -4; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 30%,
+    rgba(255, 245, 220, 0.9) 0%,
+    rgba(255, 210, 150, 0.5) 30%,
+    rgba(255, 160, 80, 0.2) 55%,
+    transparent 80%);
+  opacity: 0;
+}
+
+.flash-atmosfera.activo { animation: atmosferaPulso 0.9s ease-out; }
+
+@keyframes atmosferaPulso {
+  0% { opacity: 0; }
+  8% { opacity: 1; }
+  20% { opacity: 0.3; }
+  35% { opacity: 0.9; }
+  55% { opacity: 0.4; }
+  100% { opacity: 0; }
 }
 
 .rayo-svg {
-  position: fixed; top: 0; pointer-events: none; z-index: -1;
+  position: fixed; top: 0; pointer-events: none; z-index: -3;
   filter:
-    drop-shadow(0 0 6px rgba(255, 255, 255, 1))
-    drop-shadow(0 0 15px rgba(200, 220, 255, 1))
-    drop-shadow(0 0 30px rgba(150, 180, 255, 0.9))
-    drop-shadow(0 0 60px rgba(100, 150, 255, 0.7))
-    drop-shadow(0 0 100px rgba(60, 100, 255, 0.5));
+    drop-shadow(0 0 8px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 18px rgba(255, 240, 200, 1))
+    drop-shadow(0 0 35px rgba(255, 200, 100, 0.95))
+    drop-shadow(0 0 70px rgba(255, 140, 40, 0.8))
+    drop-shadow(0 0 120px rgba(255, 80, 0, 0.6));
   opacity: 0;
   animation: rayoAparicion 1.4s ease-out forwards;
 }
@@ -192,110 +409,165 @@ body {
   100% { opacity: 0; }
 }
 
-.flash-atmosfera {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 30%, rgba(220, 235, 255, 0.85) 0%, rgba(180, 210, 255, 0.5) 30%, rgba(140, 180, 255, 0.2) 50%, transparent 75%);
+.pulso-bocina {
+  position: fixed; inset: 0; z-index: -5; pointer-events: none;
+  background: radial-gradient(circle at 50% 70%,
+    rgba(255, 220, 150, 0.35) 0%,
+    rgba(255, 160, 80, 0.15) 30%,
+    transparent 60%);
   opacity: 0;
 }
 
-.flash-atmosfera.activo { animation: atmosferaPulso 0.9s ease-out; }
-
-@keyframes atmosferaPulso {
-  0% { opacity: 0; }
-  8% { opacity: 1; }
-  20% { opacity: 0.3; }
-  35% { opacity: 0.9; }
-  55% { opacity: 0.4; }
-  100% { opacity: 0; }
+.pulso-bocina.activo {
+  animation: bocinaPulso 3s ease-in-out;
 }
 
-.retumbar {
-  position: fixed; inset: 0; z-index: -2; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 20%, rgba(150, 180, 255, 0.25), transparent 65%);
-  opacity: 0;
-}
-.retumbar.activo { animation: retumbarPulso 2s ease-in-out; }
-
-@keyframes retumbarPulso {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 0.6; }
+@keyframes bocinaPulso {
+  0% { opacity: 0; transform: scale(1); }
+  20% { opacity: 0.8; transform: scale(1.05); }
+  50% { opacity: 0.4; transform: scale(1.1); }
+  80% { opacity: 0.7; transform: scale(1.15); }
+  100% { opacity: 0; transform: scale(1.2); }
 }
 
-/* HEADER */
-.header-hub { text-align: center; padding: 2rem 1.2rem 1rem; position: relative; z-index: 10; }
+/* =========================================================
+   HEADER
+   ========================================================= */
+.header-hub {
+  text-align: center;
+  padding: 2rem 1.2rem 1rem;
+  position: relative;
+  z-index: 10;
+}
 
 .logo-shock-grande {
   max-width: 340px;
   width: 78%;
   margin: 0 auto 1.5rem;
   display: block;
-  filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 50px rgba(249, 115, 22, 0.6)) drop-shadow(0 0 80px rgba(255, 100, 0, 0.4));
+  filter:
+    drop-shadow(0 0 25px rgba(250, 204, 21, 0.9))
+    drop-shadow(0 0 50px rgba(249, 115, 22, 0.6))
+    drop-shadow(0 0 80px rgba(255, 100, 0, 0.4));
   animation: logoBrilla 3s ease-in-out infinite;
 }
 
 @keyframes logoBrilla {
-  0%, 100% { filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 50px rgba(249, 115, 22, 0.6)) drop-shadow(0 0 80px rgba(255, 100, 0, 0.4)); transform: scale(1); }
-  50% { filter: drop-shadow(0 0 40px rgba(250, 204, 21, 1)) drop-shadow(0 0 80px rgba(249, 115, 22, 0.9)) drop-shadow(0 0 120px rgba(255, 100, 0, 0.6)); transform: scale(1.03); }
+  0%, 100% {
+    filter: drop-shadow(0 0 25px rgba(250, 204, 21, 0.9)) drop-shadow(0 0 50px rgba(249, 115, 22, 0.6)) drop-shadow(0 0 80px rgba(255, 100, 0, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 40px rgba(250, 204, 21, 1)) drop-shadow(0 0 80px rgba(249, 115, 22, 0.9)) drop-shadow(0 0 120px rgba(255, 100, 0, 0.6));
+    transform: scale(1.03);
+  }
 }
 
 .titulo-hub {
-  font-size: clamp(1.5rem, 5.5vw, 2.6rem); font-weight: bold;
-  text-shadow: 3px 3px 0 rgba(0,0,0,0.9), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7);
-  margin-bottom: 0.5rem; color: white; letter-spacing: 2px;
+  font-size: clamp(1.5rem, 5.5vw, 2.6rem);
+  font-weight: bold;
+  text-shadow:
+    3px 3px 0 rgba(0,0,0,0.95),
+    0 0 20px rgba(250, 204, 21, 0.9),
+    0 0 40px rgba(249, 115, 22, 0.7);
+  margin-bottom: 0.5rem;
+  color: white;
+  letter-spacing: 2px;
   animation: tituloPulsa 2.5s ease-in-out infinite;
 }
 
 @keyframes tituloPulsa {
-  0%, 100% { text-shadow: 3px 3px 0 rgba(0,0,0,0.9), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7); }
-  50% { text-shadow: 3px 3px 0 rgba(0,0,0,0.9), 0 0 30px rgba(250, 204, 21, 1), 0 0 60px rgba(249, 115, 22, 1); }
+  0%, 100% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 20px rgba(250, 204, 21, 0.9), 0 0 40px rgba(249, 115, 22, 0.7); }
+  50% { text-shadow: 3px 3px 0 rgba(0,0,0,0.95), 0 0 30px rgba(250, 204, 21, 1), 0 0 60px rgba(249, 115, 22, 1); }
 }
 
 .subtitulo-hub {
-  font-size: clamp(0.9rem, 3.2vw, 1.15rem); color: #fde68a; font-style: italic;
-  margin-bottom: 1rem; text-shadow: 2px 2px 6px rgba(0,0,0,0.95); letter-spacing: 1px;
+  font-size: clamp(0.9rem, 3.2vw, 1.15rem);
+  color: #fde68a;
+  font-style: italic;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.95);
+  letter-spacing: 1px;
 }
 
 .versiculo-hub {
-  font-size: clamp(0.82rem, 2.8vw, 1.05rem); color: #fed7aa; max-width: 700px; margin: 0 auto;
-  padding: 0.9rem 1.3rem; background: rgba(0, 0, 0, 0.55); border-radius: var(--radio);
-  border: 2px solid rgba(250, 204, 21, 0.6); backdrop-filter: blur(8px);
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.95); line-height: 1.5; box-shadow: 0 0 25px rgba(250, 204, 21, 0.3);
+  font-size: clamp(0.82rem, 2.8vw, 1.05rem);
+  color: #fed7aa;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0.9rem 1.3rem;
+  background: rgba(0, 0, 0, 0.65);
+  border-radius: var(--radio);
+  border: 2px solid rgba(250, 204, 21, 0.6);
+  backdrop-filter: blur(10px);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
+  line-height: 1.5;
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.4);
 }
 .versiculo-hub strong { color: #facc15; }
 
+/* =========================================================
+   TÍTULO DE SECCIÓN
+   ========================================================= */
 .titulo-seccion-juegos {
-  text-align: center; font-size: clamp(1.3rem, 4.5vw, 2rem); color: #facc15;
-  margin: 2rem auto 0; padding: 0 1.5rem;
+  text-align: center;
+  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  color: #facc15;
+  margin: 2rem auto 0;
+  padding: 0 1.5rem;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.95), 0 0 25px rgba(250, 204, 21, 0.7);
-  letter-spacing: 2px; position: relative; z-index: 5;
+  letter-spacing: 2px;
+  position: relative;
+  z-index: 5;
 }
 
 .titulo-seccion-juegos::after {
-  content: ""; display: block; width: 140px; height: 4px;
+  content: "";
+  display: block;
+  width: 140px;
+  height: 4px;
   background: linear-gradient(90deg, transparent, #facc15, transparent);
-  margin: 0.9rem auto 0; border-radius: 50px; box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
+  margin: 0.9rem auto 0;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgba(250, 204, 21, 0.8);
 }
 
-/* GRID */
+/* =========================================================
+   GRID DE JUEGOS
+   ========================================================= */
 .juegos-grid {
-  display: grid; gap: 2rem; grid-template-columns: 1fr;
-  padding: 3rem 1.5rem; max-width: 1100px; margin: 0 auto;
-  position: relative; z-index: 5;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  padding: 3rem 1.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 5;
 }
 
 @media (min-width: 600px) { .juegos-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .juegos-grid { grid-template-columns: repeat(3, 1fr); } }
 
 .juego-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+  background: linear-gradient(135deg, rgba(20, 15, 30, 0.75), rgba(40, 20, 25, 0.65));
   backdrop-filter: blur(15px);
   border: 3px solid rgba(250, 204, 21, 0.7);
-  border-radius: 25px; padding: 2rem 1.5rem; text-align: center; cursor: pointer;
+  border-radius: 25px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  position: relative; overflow: hidden;
+  position: relative;
+  overflow: hidden;
   animation: flotar 4s ease-in-out infinite;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.6), 0 0 25px rgba(250, 204, 21, 0.4), inset 0 0 30px rgba(250, 204, 21, 0.1);
-  text-decoration: none; color: inherit; display: block;
+  box-shadow:
+    0 10px 35px rgba(0,0,0,0.7),
+    0 0 25px rgba(250, 204, 21, 0.4),
+    inset 0 0 30px rgba(250, 204, 21, 0.1);
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 .juego-card:nth-child(1) { animation-delay: 0s; }
@@ -312,14 +584,27 @@ body {
 .juego-card:hover {
   transform: translateY(-18px) scale(1.05);
   border-color: #facc15;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 55px rgba(250, 204, 21, 0.9), inset 0 0 50px rgba(250, 204, 21, 0.25);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.8),
+    0 0 55px rgba(250, 204, 21, 0.9),
+    inset 0 0 50px rgba(250, 204, 21, 0.25);
   animation-play-state: paused;
 }
 
 .juego-card::before {
-  content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(250, 204, 21, 0.4), transparent, rgba(249, 115, 22, 0.4), transparent);
-  animation: rotar 8s linear infinite; opacity: 0; transition: opacity 0.4s;
+  content: "";
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(from 0deg,
+    transparent,
+    rgba(250, 204, 21, 0.4),
+    transparent,
+    rgba(249, 115, 22, 0.4),
+    transparent);
+  animation: rotar 8s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s;
 }
 .juego-card:hover::before { opacity: 1; }
 
@@ -328,7 +613,9 @@ body {
 .juego-card > * { position: relative; z-index: 2; }
 
 .juego-icono {
-  font-size: 4.5rem; display: block; margin-bottom: 1rem;
+  font-size: 4.5rem;
+  display: block;
+  margin-bottom: 1rem;
   filter: drop-shadow(0 0 20px rgba(250, 204, 21, 0.9));
   animation: iconoPulsa 2.5s ease-in-out infinite;
 }
@@ -339,26 +626,49 @@ body {
 }
 
 .juego-titulo {
-  font-size: clamp(1.05rem, 3.5vw, 1.35rem); font-weight: bold; color: #fef3c7;
-  margin-bottom: 0.6rem; text-shadow: 2px 2px 5px rgba(0,0,0,0.95); letter-spacing: 0.5px;
+  font-size: clamp(1.05rem, 3.5vw, 1.35rem);
+  font-weight: bold;
+  color: #fef3c7;
+  margin-bottom: 0.6rem;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.95);
+  letter-spacing: 0.5px;
 }
 
 .juego-descripcion {
-  font-size: clamp(0.8rem, 2.5vw, 0.95rem); color: #fed7aa; line-height: 1.5;
-  margin-bottom: 1rem; text-shadow: 1px 1px 3px rgba(0,0,0,0.95); min-height: 3em;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  color: #fed7aa;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
+  min-height: 3em;
 }
 
 .juego-versiculo {
-  display: inline-block; font-size: 0.75rem; color: #facc15;
-  background: rgba(0, 0, 0, 0.5); padding: 0.3rem 0.8rem; border-radius: 50px;
-  border: 1px solid rgba(250, 204, 21, 0.6); font-weight: bold; margin-bottom: 1rem;
+  display: inline-block;
+  font-size: 0.75rem;
+  color: #facc15;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  border: 1px solid rgba(250, 204, 21, 0.6);
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
 .btn-jugar {
-  display: inline-block; background: linear-gradient(135deg, #facc15, #f97316);
-  color: #1e293b; border: 3px solid white; padding: 0.7rem 1.8rem; border-radius: 50px;
-  font-weight: bold; font-size: clamp(0.85rem, 2.8vw, 1rem); font-family: inherit; cursor: pointer;
-  box-shadow: 0 5px 0 #b45309, 0 8px 18px rgba(0,0,0,0.5); transition: all 0.15s; letter-spacing: 0.5px;
+  display: inline-block;
+  background: linear-gradient(135deg, #facc15, #f97316);
+  color: #1e293b;
+  border: 3px solid white;
+  padding: 0.7rem 1.8rem;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: 0 5px 0 #b45309, 0 8px 18px rgba(0,0,0,0.5);
+  transition: all 0.15s;
+  letter-spacing: 0.5px;
 }
 
 .juego-card:hover .btn-jugar {
@@ -369,16 +679,20 @@ body {
 
 .juego-card.radio-card {
   border-color: var(--celeste);
-  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.15));
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(59, 130, 246, 0.25));
 }
 
 .juego-card.radio-card:hover {
   border-color: #22d3ee;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 55px rgba(6, 182, 212, 0.9), inset 0 0 50px rgba(6, 182, 212, 0.25);
+  box-shadow:
+    0 25px 60px rgba(0,0,0,0.8),
+    0 0 55px rgba(6, 182, 212, 0.9),
+    inset 0 0 50px rgba(6, 182, 212, 0.25);
 }
 
 .juego-card.radio-card .btn-jugar {
-  background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  color: white;
   box-shadow: 0 5px 0 #0e7490, 0 8px 18px rgba(0,0,0,0.5);
 }
 
@@ -387,15 +701,26 @@ body {
   box-shadow: 0 8px 0 #0e7490, 0 12px 24px rgba(0,0,0,0.6);
 }
 
-/* CLICK EFECTOS */
+/* =========================================================
+   EFECTO DE RAYO AL HACER CLIC
+   ========================================================= */
 .rayo-click {
-  position: fixed; width: 6px; height: 100vh; pointer-events: none; z-index: 9999;
+  position: fixed;
+  width: 6px;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
   animation: rayoClickCae 0.8s ease-out forwards;
 }
 
 .rayo-click svg {
-  display: block; overflow: visible;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 1)) drop-shadow(0 0 25px rgba(200, 220, 255, 1)) drop-shadow(0 0 50px rgba(150, 180, 255, 0.9)) drop-shadow(0 0 100px rgba(100, 150, 255, 0.7));
+  display: block;
+  overflow: visible;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 1))
+    drop-shadow(0 0 25px rgba(255, 240, 200, 1))
+    drop-shadow(0 0 50px rgba(255, 200, 100, 0.95))
+    drop-shadow(0 0 100px rgba(255, 140, 40, 0.8));
 }
 
 @keyframes rayoClickCae {
@@ -407,10 +732,18 @@ body {
 }
 
 .chispa {
-  position: fixed; width: 10px; height: 10px; border-radius: 50%;
-  background: radial-gradient(circle, #fff 0%, #c8dcff 40%, #7aa2ff 70%, transparent 100%);
-  box-shadow: 0 0 15px #ffffff, 0 0 30px #a8c8ff, 0 0 50px #6080ff;
-  pointer-events: none; z-index: 9999; animation: chispaVuela 0.9s ease-out forwards;
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0%, #ffe4a8 40%, #ffb347 70%, transparent 100%);
+  box-shadow:
+    0 0 15px #ffffff,
+    0 0 30px #ffdd88,
+    0 0 50px #ff8800;
+  pointer-events: none;
+  z-index: 9999;
+  animation: chispaVuela 0.9s ease-out forwards;
 }
 
 @keyframes chispaVuela {
@@ -419,9 +752,16 @@ body {
 }
 
 .destello-click {
-  position: fixed; inset: 0;
-  background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 1) 0%, rgba(220, 235, 255, 0.9) 15%, rgba(180, 210, 255, 0.5) 30%, transparent 60%);
-  pointer-events: none; z-index: 9998; animation: destelloClick 0.7s ease-out forwards;
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at var(--x) var(--y),
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 230, 180, 0.9) 15%,
+    rgba(255, 180, 100, 0.5) 30%,
+    transparent 60%);
+  pointer-events: none;
+  z-index: 9998;
+  animation: destelloClick 0.7s ease-out forwards;
 }
 
 @keyframes destelloClick {
@@ -430,11 +770,19 @@ body {
   100% { opacity: 0; }
 }
 
-/* FOOTER */
+/* =========================================================
+   FOOTER
+   ========================================================= */
 footer {
-  text-align: center; padding: 2rem 1.2rem; background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(10px); border-top: 3px solid rgba(250, 204, 21, 0.7);
-  position: relative; z-index: 5; margin-top: auto; box-shadow: 0 -10px 40px rgba(250, 204, 21, 0.2);
+  text-align: center;
+  padding: 2rem 1.2rem;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border-top: 3px solid rgba(250, 204, 21, 0.7);
+  position: relative;
+  z-index: 5;
+  margin-top: auto;
+  box-shadow: 0 -10px 40px rgba(250, 204, 21, 0.2);
 }
 
 footer .footer-logo {
@@ -445,26 +793,37 @@ footer .footer-logo {
 }
 
 footer p {
-  color: #fde68a; font-size: clamp(0.8rem, 2.5vw, 0.95rem); margin-bottom: 0.4rem;
+  color: #fde68a;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  margin-bottom: 0.4rem;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.95);
 }
 footer strong { color: #facc15; }
 
 footer .credito {
-  font-size: 0.78rem; opacity: 0.85; font-style: italic; margin-top: 0.8rem; color: #fed7aa;
+  font-size: 0.78rem;
+  opacity: 0.85;
+  font-style: italic;
+  margin-top: 0.8rem;
+  color: #fed7aa;
 }
 
+/* =========================================================
+   MEDIA QUERIES
+   ========================================================= */
 @media (max-width: 600px) {
   .juego-card { padding: 1.5rem 1rem; }
   .juego-icono { font-size: 3.5rem; }
   .logo-shock-grande { max-width: 240px; }
-  .llamas-cima { font-size: 4rem; top: 40vh; }
-  .resplandor-cima { width: 300px; height: 300px; }
+  .resplandor-fuego { width: 350px; height: 350px; }
+  .nube-espesa { filter: blur(35px); }
+  .columna-humo { filter: blur(35px); }
+  .montana-sinai { height: 50vh; }
+  .fuego-cima { width: 200px; height: 200px; bottom: 45vh; }
 }
 
 @media (max-width: 768px) {
-  .monte-sinai { height: 45vh; }
-  .nube { filter: blur(45px); }
+  .fondo-imagen { background-attachment: scroll; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -474,30 +833,84 @@ footer .credito {
 </head>
 <body>
 
-<div class="cielo"></div>
-<div class="estrellas" id="estrellas"></div>
+<!-- =========================================================
+     FONDO CON TU IMAGEN
+     ========================================================= -->
+<div class="fondo-imagen"></div>
+<div class="fondo-overlay"></div>
 
-<div class="nubes-capa">
-  <div class="nube nube-1"></div>
-  <div class="nube nube-2"></div>
-  <div class="nube nube-3"></div>
-  <div class="nube nube-4"></div>
-  <div class="nube nube-5"></div>
-  <div class="nube nube-6"></div>
+<!-- MONTAÑA DEL SINAÍ (silueta realista) -->
+<div class="montana-sinai">
+  <svg viewBox="0 0 1440 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="gradMontana" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#1a0a05"/>
+        <stop offset="40%" stop-color="#0d0503"/>
+        <stop offset="100%" stop-color="#000000"/>
+      </linearGradient>
+      <linearGradient id="gradBrilloMontana" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="rgba(255, 180, 80, 0.5)"/>
+        <stop offset="100%" stop-color="rgba(255, 100, 20, 0)"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Capa de brillo detrás -->
+    <path d="M0,500 L180,380 L320,300 L450,220 L580,140 L680,80 L720,50 L760,80 L860,140 L990,220 L1120,300 L1260,380 L1440,500 Z"
+          fill="url(#gradBrilloMontana)" opacity="0.7"/>
+
+    <!-- Montaña principal -->
+    <path d="M0,500 L180,380 L320,300 L450,220 L580,140 L680,80 L720,50 L760,80 L860,140 L990,220 L1120,300 L1260,380 L1440,500 Z"
+          fill="url(#gradMontana)"/>
+
+    <!-- Sombra lateral izquierda -->
+    <path d="M0,500 L180,380 L320,300 L450,220 L580,140 L680,80 L720,50 L720,500 Z"
+          fill="rgba(0,0,0,0.35)"/>
+
+    <!-- Sombra lateral derecha -->
+    <path d="M720,50 L760,80 L860,140 L990,220 L1120,300 L1260,380 L1440,500 L720,500 Z"
+          fill="rgba(0,0,0,0.15)"/>
+
+    <!-- Brillo divino en la cima -->
+    <ellipse cx="720" cy="80" rx="180" ry="60" fill="rgba(255, 200, 100, 0.35)" filter="blur(20px)"/>
+    <ellipse cx="720" cy="70" rx="90" ry="30" fill="rgba(255, 240, 180, 0.5)" filter="blur(12px)"/>
+  </svg>
 </div>
 
-<div class="monte-sinai"></div>
-<div class="resplandor-cima"></div>
-<div class="llamas-cima">🔥</div>
+<!-- FUEGO Y HUMO EN LA CIMA -->
+<div class="fuego-cima">
+  <div class="llama llama-1"></div>
+  <div class="llama llama-2"></div>
+  <div class="llama llama-3"></div>
+  <div class="brillo-cima"></div>
+</div>
 
+<!-- Nubes espesas (Éxodo 19:16) -->
+<div class="nubes-espesas">
+  <div class="nube-espesa nube-e1"></div>
+  <div class="nube-espesa nube-e2"></div>
+  <div class="nube-espesa nube-e3"></div>
+  <div class="nube-espesa nube-e4"></div>
+  <div class="nube-espesa nube-e5"></div>
+</div>
+
+<!-- Humo del monte (Éxodo 19:18) -->
+<div class="humo-monte" id="humo-monte"></div>
+
+<!-- Luz y resplandor divino -->
+<div class="luz-divina"></div>
+<div class="resplandor-fuego"></div>
+
+<!-- Efectos atmosféricos -->
 <div class="relampago-cielo" id="relampago-cielo"></div>
 <div class="flash-atmosfera" id="flash-atmosfera"></div>
-<div class="retumbar" id="retumbar"></div>
+<div class="pulso-bocina" id="pulso-bocina"></div>
 <div class="tormenta" id="tormenta"></div>
 
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
 <header class="header-hub">
 
-  <!-- ⬇️ LOGO DEL HEADER — Tu archivo está SUELTO (sin carpeta assets) ⬇️ -->
   <img src="logo-shock.png" alt="Shock 99.5 FM" class="logo-shock-grande">
 
   <h1 class="titulo-hub">⚡ PEQUEÑOS EXPLORADORES SHOCK ⚡</h1>
@@ -510,6 +923,9 @@ footer .credito {
 
 <h2 class="titulo-seccion-juegos">🎯 Elige tu Aventura 🎯</h2>
 
+<!-- =========================================================
+     GRID DE JUEGOS
+     ========================================================= -->
 <main class="juegos-grid">
 
   <a href="https://creadoryhwh.github.io/peque-osexploradoresshock.github.io/" target="_blank" rel="noopener" class="juego-card">
@@ -554,35 +970,45 @@ footer .credito {
 
 </main>
 
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
 <footer>
-
-  <!-- ⬇️ LOGO DEL FOOTER — Mismo archivo suelto ⬇️ -->
   <img src="logo-shock.png" alt="Shock 99.5 FM" class="footer-logo">
-
   <p>📻 <strong>Shock 99.5 FM</strong> — Una Radio con Propósito</p>
   <p>🌟 Pequeños Exploradores Shock | Juegos Bíblicos 🌟</p>
   <p class="credito">"Dejad a los niños venir a mí, y no se lo impidáis; porque de los tales es el reino de Dios." — Marcos 10:14</p>
 </footer>
 
 <script>
-/* ============ ESTRELLAS ============ */
-function generarEstrellas() {
-  const contenedor = document.getElementById('estrellas');
-  for (let i = 0; i < 140; i++) {
-    const estrella = document.createElement('div');
-    estrella.className = 'estrella';
-    const tamaño = Math.random() * 2.5 + 1;
-    estrella.style.width = tamaño + 'px';
-    estrella.style.height = tamaño + 'px';
-    estrella.style.left = Math.random() * 100 + '%';
-    estrella.style.top = Math.random() * 70 + '%';
-    estrella.style.animationDuration = (1.5 + Math.random() * 3) + 's';
-    estrella.style.animationDelay = Math.random() * 3 + 's';
-    contenedor.appendChild(estrella);
+/* =========================================================
+   HUMO DEL MONTE
+   ========================================================= */
+function generarHumo() {
+  const contenedor = document.getElementById('humo-monte');
+  if (!contenedor) return;
+
+  for (let i = 0; i < 12; i++) {
+    const humo = document.createElement('div');
+    humo.className = 'columna-humo';
+    const tamaño = 200 + Math.random() * 250;
+    humo.style.width = tamaño + 'px';
+    humo.style.height = tamaño + 'px';
+    humo.style.left = (30 + Math.random() * 40) + '%';
+    humo.style.background = `radial-gradient(circle at 30% 30%,
+      rgba(120, 60, 30, 0.8) 0%,
+      rgba(80, 40, 20, 0.6) 30%,
+      rgba(50, 25, 15, 0.4) 60%,
+      transparent 90%)`;
+    humo.style.animationDelay = (Math.random() * 12) + 's';
+    humo.style.animationDuration = (10 + Math.random() * 6) + 's';
+    contenedor.appendChild(humo);
   }
 }
 
-/* ============ RAYOS SVG ============ */
+/* =========================================================
+   RAYOS SVG REALISTAS
+   ========================================================= */
 function generarPathRayo(ancho, alto) {
   const puntos = [];
   const numSegmentos = 8 + Math.floor(Math.random() * 6);
@@ -590,7 +1016,7 @@ function generarPathRayo(ancho, alto) {
 
   for (let i = 0; i <= numSegmentos; i++) {
     const y = (alto / numSegmentos) * i;
-    const amplitud = 40 * (1 - i / numSegmentos) + 15;
+    const amplitud = 45 * (1 - i / numSegmentos) + 15;
     const x = centroBase + (Math.random() - 0.5) * amplitud * 2;
 
     if (i === 0) puntos.push({ x: centroBase + (Math.random() - 0.5) * 30, y: 0 });
@@ -606,11 +1032,11 @@ function generarPathRayo(ancho, alto) {
 function generarPathRama(puntoInicio, direccion, alto) {
   const puntos = [{ x: puntoInicio.x, y: puntoInicio.y }];
   const numSegmentos = 4 + Math.floor(Math.random() * 3);
-  const separacion = (Math.random() * 40 + 30) * direccion;
+  const separacion = (Math.random() * 50 + 35) * direccion;
 
   for (let i = 1; i <= numSegmentos; i++) {
     const y = puntoInicio.y + (alto / numSegmentos) * i;
-    const x = puntoInicio.x + separacion * (i / numSegmentos) + (Math.random() - 0.5) * 20;
+    const x = puntoInicio.x + separacion * (i / numSegmentos) + (Math.random() - 0.5) * 25;
     puntos.push({ x, y });
   }
 
@@ -621,14 +1047,14 @@ function generarPathRama(puntoInicio, direccion, alto) {
 
 function generarSVGRayo(ancho, alto) {
   const { d: pathPrincipal, puntos } = generarPathRayo(ancho, alto);
-  const numRamas = 2 + Math.floor(Math.random() * 3);
+  const numRamas = 3 + Math.floor(Math.random() * 3);
   const ramas = [];
 
   for (let i = 0; i < numRamas; i++) {
     const idx = 2 + Math.floor(Math.random() * (puntos.length - 4));
     const puntoRama = puntos[idx];
     const direccion = Math.random() > 0.5 ? 1 : -1;
-    const altoRama = alto * (0.15 + Math.random() * 0.25);
+    const altoRama = alto * (0.15 + Math.random() * 0.3);
     ramas.push(generarPathRama(puntoRama, direccion, altoRama));
   }
 
@@ -638,28 +1064,31 @@ function generarSVGRayo(ancho, alto) {
   return `<svg width="${ancho}" height="${alto}" viewBox="0 0 ${ancho} ${alto}" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="${gid}" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="rgba(200,220,255,1)"/>
-        <stop offset="20%" stop-color="rgba(255,255,255,1)"/>
-        <stop offset="50%" stop-color="rgba(180,210,255,1)"/>
-        <stop offset="80%" stop-color="rgba(255,255,255,0.95)"/>
-        <stop offset="100%" stop-color="rgba(150,180,255,0.7)"/>
+        <stop offset="0%" stop-color="rgba(255, 245, 220, 1)"/>
+        <stop offset="20%" stop-color="rgba(255, 255, 255, 1)"/>
+        <stop offset="50%" stop-color="rgba(255, 240, 200, 1)"/>
+        <stop offset="80%" stop-color="rgba(255, 255, 255, 0.95)"/>
+        <stop offset="100%" stop-color="rgba(255, 220, 150, 0.8)"/>
       </linearGradient>
       <linearGradient id="${grid}" x1="0%" y1="0%" x2="0%" y2="100%">
-        <stop offset="0%" stop-color="rgba(220,235,255,0.95)"/>
-        <stop offset="50%" stop-color="rgba(255,255,255,0.85)"/>
-        <stop offset="100%" stop-color="rgba(150,180,255,0.3)"/>
+        <stop offset="0%" stop-color="rgba(255, 250, 220, 0.95)"/>
+        <stop offset="50%" stop-color="rgba(255, 255, 255, 0.9)"/>
+        <stop offset="100%" stop-color="rgba(255, 220, 150, 0.4)"/>
       </linearGradient>
     </defs>
-    <path d="${pathPrincipal}" fill="none" stroke="rgba(200,220,255,0.5)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+
+    <path d="${pathPrincipal}" fill="none" stroke="rgba(255, 240, 200, 0.55)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+
     ${ramas.map(r => `
-      <path d="${r}" fill="none" stroke="rgba(200,220,255,0.4)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
-      <path d="${r}" fill="none" stroke="url(#${grid})" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="${r}" fill="none" stroke="rgba(255,255,255,0.95)" stroke-width="0.9" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${r}" fill="none" stroke="rgba(255, 240, 200, 0.5)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+      <path d="${r}" fill="none" stroke="url(#${grid})" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="${r}" fill="none" stroke="rgba(255, 255, 255, 0.95)" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
     `).join('')}
-    <path d="${pathPrincipal}" fill="none" stroke="rgba(180,210,255,0.6)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="${pathPrincipal}" fill="none" stroke="rgba(220,235,255,0.85)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="${pathPrincipal}" fill="none" stroke="url(#${gid})" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="${pathPrincipal}" fill="none" stroke="rgba(255,255,255,1)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <path d="${pathPrincipal}" fill="none" stroke="rgba(255, 230, 180, 0.7)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${pathPrincipal}" fill="none" stroke="rgba(255, 250, 220, 0.9)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${pathPrincipal}" fill="none" stroke="url(#${gid})" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${pathPrincipal}" fill="none" stroke="rgba(255, 255, 255, 1)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
   </svg>`;
 }
 
@@ -667,8 +1096,8 @@ function lanzarRayo(esGrande = false) {
   const tormenta = document.getElementById('tormenta');
   if (!tormenta) return;
 
-  const ancho = esGrande ? 300 + Math.random() * 300 : 120 + Math.random() * 200;
-  const alto = window.innerHeight * (esGrande ? 1.1 : 0.85);
+  const ancho = esGrande ? 350 + Math.random() * 350 : 140 + Math.random() * 220;
+  const alto = window.innerHeight * (esGrande ? 1.15 : 0.9);
   const left = Math.random() * (window.innerWidth - ancho);
 
   const rayo = document.createElement('div');
@@ -682,8 +1111,8 @@ function lanzarRayo(esGrande = false) {
   dispararFlashAtmosfera(esGrande);
   dispararRelampagoCielo();
 
-  if (Math.random() > 0.6) {
-    setTimeout(() => dispararRetumbar(), 300 + Math.random() * 500);
+  if (Math.random() > 0.5) {
+    dispararPulsoBocina();
   }
 
   setTimeout(() => rayo.remove(), 1600);
@@ -695,8 +1124,8 @@ function dispararFlashAtmosfera(grande) {
   void flash.offsetWidth;
   flash.classList.add('activo');
   flash.style.background = grande
-    ? 'radial-gradient(ellipse at 50% 30%, rgba(230, 240, 255, 1) 0%, rgba(190, 215, 255, 0.6) 30%, rgba(140, 180, 255, 0.3) 50%, transparent 75%)'
-    : 'radial-gradient(ellipse at 50% 30%, rgba(220, 235, 255, 0.85) 0%, rgba(180, 210, 255, 0.5) 30%, rgba(140, 180, 255, 0.2) 50%, transparent 75%)';
+    ? 'radial-gradient(ellipse at 50% 30%, rgba(255, 250, 230, 1) 0%, rgba(255, 220, 160, 0.65) 30%, rgba(255, 160, 80, 0.35) 55%, transparent 80%)'
+    : 'radial-gradient(ellipse at 50% 30%, rgba(255, 240, 210, 0.9) 0%, rgba(255, 200, 140, 0.55) 30%, rgba(255, 150, 70, 0.25) 55%, transparent 80%)';
 }
 
 function dispararRelampagoCielo() {
@@ -709,29 +1138,34 @@ function dispararRelampagoCielo() {
   }, 180);
 }
 
-function dispararRetumbar() {
-  const retumbar = document.getElementById('retumbar');
-  retumbar.classList.remove('activo');
-  void retumbar.offsetWidth;
-  retumbar.classList.add('activo');
+function dispararPulsoBocina() {
+  const pulso = document.getElementById('pulso-bocina');
+  pulso.classList.remove('activo');
+  void pulso.offsetWidth;
+  pulso.classList.add('activo');
 }
 
 function cicloTormenta() {
   lanzarRayo(false);
-  if (Math.random() > 0.75) {
+
+  if (Math.random() > 0.7) {
     setTimeout(() => lanzarRayo(true), 200 + Math.random() * 400);
   }
-  if (Math.random() > 0.85) {
-    const numRafaga = 2 + Math.floor(Math.random() * 2);
+
+  if (Math.random() > 0.8) {
+    const numRafaga = 2 + Math.floor(Math.random() * 3);
     for (let i = 0; i < numRafaga; i++) {
-      setTimeout(() => lanzarRayo(false), 250 + i * 180);
+      setTimeout(() => lanzarRayo(false), 250 + i * 200);
     }
   }
-  const delay = 400 + Math.random() * 1400;
+
+  const delay = 400 + Math.random() * 1300;
   setTimeout(cicloTormenta, delay);
 }
 
-/* ============ CLICK EFECTO ============ */
+/* =========================================================
+   EFECTO DE RAYO AL HACER CLIC
+   ========================================================= */
 function efectoRayoClick(x, y) {
   const destello = document.createElement('div');
   destello.className = 'destello-click';
@@ -740,7 +1174,7 @@ function efectoRayoClick(x, y) {
   document.body.appendChild(destello);
   setTimeout(() => destello.remove(), 800);
 
-  const anchoRayo = 120;
+  const anchoRayo = 140;
   const altoRayo = window.innerHeight;
   const rayo = document.createElement('div');
   rayo.className = 'rayo-click';
@@ -751,14 +1185,14 @@ function efectoRayoClick(x, y) {
   document.body.appendChild(rayo);
   setTimeout(() => rayo.remove(), 900);
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 28; i++) {
     const chispa = document.createElement('div');
     chispa.className = 'chispa';
     chispa.style.left = x + 'px';
     chispa.style.top = y + 'px';
 
-    const angulo = (Math.PI * 2 * i) / 25 + Math.random() * 0.6;
-    const distancia = 70 + Math.random() * 180;
+    const angulo = (Math.PI * 2 * i) / 28 + Math.random() * 0.6;
+    const distancia = 70 + Math.random() * 200;
     const tx = Math.cos(angulo) * distancia;
     const ty = Math.sin(angulo) * distancia;
 
@@ -795,8 +1229,11 @@ document.querySelectorAll('.juego-card').forEach(card => {
   });
 });
 
+/* =========================================================
+   INICIALIZACIÓN
+   ========================================================= */
 window.addEventListener('load', () => {
-  generarEstrellas();
+  generarHumo();
   setTimeout(cicloTormenta, 800);
 
   const cards = document.querySelectorAll('.juego-card');
@@ -811,17 +1248,20 @@ window.addEventListener('load', () => {
   });
 });
 
+/* =========================================================
+   PARALLAX SUTIL
+   ========================================================= */
 document.addEventListener('mousemove', (e) => {
-  const x = (e.clientX / window.innerWidth - 0.5) * 20;
-  const y = (e.clientY / window.innerHeight - 0.5) * 20;
+  const x = (e.clientX / window.innerWidth - 0.5) * 15;
+  const y = (e.clientY / window.innerHeight - 0.5) * 15;
 
-  const montes = document.querySelector('.monte-sinai');
-  const resplandor = document.querySelector('.resplandor-cima');
-  const llamas = document.querySelector('.llamas-cima');
+  const fondo = document.querySelector('.fondo-imagen');
+  const montana = document.querySelector('.montana-sinai');
+  const resplandor = document.querySelector('.resplandor-fuego');
 
-  if (montes) montes.style.transform = `translateX(-50%) translate(${x * 0.5}px, ${y * 0.5}px)`;
-  if (resplandor) resplandor.style.transform = `translateX(-50%) translate(${x * 0.3}px, ${y * 0.3}px)`;
-  if (llamas) llamas.style.transform = `translateX(-50%) translate(${x * 0.6}px, ${y * 0.6}px)`;
+  if (fondo) fondo.style.transform = `scale(1.08) translate(${x * 0.3}px, ${y * 0.3}px)`;
+  if (montana) montana.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px)`;
+  if (resplandor) resplandor.style.transform = `translateX(-50%) translate(${x * 0.6}px, ${y * 0.6}px)`;
 });
 </script>
 
